@@ -24,7 +24,7 @@
   breakautoindent=false,
   showspaces=false,
   showstringspaces=false,
-  frame=shadowbox,
+  frame=single,
   rulesep=0.1em,
   abovecaptionskip=0em,
   aboveskip=1.5em,
@@ -66,6 +66,7 @@ following Taylor expansion around $x=0$ for $-1 < x \leq 1$:
 %
 \begin{align}
   \log(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7},
+  \label{eq:taylor}
 \end{align}
 %
 where terms of $O(x^8)$ have been omitted.
@@ -93,6 +94,7 @@ additions:
 \begin{align}
   \log(1+x) \approx{}& x \Bigg\{1 + x \Bigg[-\frac{1}{2} + x \Bigg(\frac{1}{3} + x \Bigg\{-\frac{1}{4}  \notag \\
   &+ x \Bigg[\frac{1}{5} + x\Bigg(-\frac{1}{6} + \frac{x}{7}\Bigg)\Bigg]\Bigg\}\Bigg)\Bigg]\Bigg\}.
+  \label{eq:horner}
 \end{align}
 %
 A C implementation using Horner's scheme could read
@@ -115,6 +117,7 @@ function as
   \log(1+x) &\approx x + \left(\frac{x}{3}-\frac{1}{2}\right)
     y+\left(\left(\frac{x}{7}-\frac{1}{6}\right)
     y+\frac{x}{5}-\frac{1}{4}\right) z,
+  \label{eq:estrin}
 \end{align}
 %
 where $y=x^2$ and $z=y^2$.  This form requires 8 floating-point
@@ -131,6 +134,53 @@ double log1p_estrin(double x) {
       + (y*(-1./6 + x/7) + x/5 - 0.25)*z;
 }
 \end{lstlisting}
+
+To exploit ILP further, one could use a rational function
+approximation, such as a Padé approximant \cite{pade}, where the
+numerator and the denominator can be calculated in parallel.  A Padé
+approximant of $\log(1+x)$ at the same order as Eq.~\eqref{eq:taylor}
+reads
+%
+\begin{align}
+  \log(1+x) \approx x
+  \frac{\frac{40 x^3}{718121}+\frac{79040 x^2}{2154363}+\frac{517208
+    x}{718121}+1}{\frac{640 x^3}{718121}+\frac{225120 x^2}{718121}+\frac{876192
+    x}{718121}+1}.
+  \label{eq:pade}
+\end{align}
+%
+A C implementation of Eq.~\eqref{eq:pade} could read:
+%
+\begin{lstlisting}[language=C]
+double log1p_pade(double x) {
+   const double num = 1 + 517208./718121*x
+      + 79040./2154363*x*x + 40./718121*x*x*x;
+   const double den = 1 + 876192./718121*x
+      + 225120./718121*x*x + 640./718121*x*x*x;
+   return x*num/den;
+}
+\end{lstlisting}
+%
+The numerator and the denominator of Eq.~\eqref{eq:pade} can be
+re-written using Estrin's scheme, allowing for further ILP:
+%
+\begin{lstlisting}[language=C]
+double log1p_mixed(double x) {
+   const double y = x*x;
+   const double num = 1 + 517208./718121*x
+      + y*(79040./2154363 + 40./718121*x);
+   const double den = 1 + 876192./718121*x
+      + y*(225120./718121 + 640./718121*x);
+   return x*num/den;
+}
+\end{lstlisting}
+%
+Note that the value $y=x^2$ can be re-used in the calculation of both
+the numerator and in the denominator.  This ``mixed'' implementation
+requires 8 floating-point multiplications, 1 floating-point division
+and 6 additions.
+
+\section{Performance comparison}
 
 \section{Conclusions}
 
