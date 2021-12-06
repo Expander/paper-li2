@@ -76,13 +76,7 @@ different implementations.  For brevity we will restrict ourselves to
 $x\in(-1,1]$.  In C the function in Eq.~\eqref{eq:taylor} could be
 implemented very naively as follows:
 %
-\begin{lstlisting}[language=C]
-double log1p_naive(double x) {
-   return x - x*x/2 + x*x*x/3 - x*x*x*x/4
-      + x*x*x*x*x/5 - x*x*x*x*x*x/6
-      + x*x*x*x*x*x*x/7;
-}
-\end{lstlisting}
+\lstinputlisting[language=C]{src/log1p_naive.c}
 %
 This naive implementation requires 26 floating-point multiplications
 and 6 floating-point additions.\footnote{Modern compilers usually
@@ -106,13 +100,7 @@ additions:
 %
 A C implementation using Horner's scheme could read
 %
-\begin{lstlisting}[language=C]
-double log1p_horner(double x) {
-   return x*(1 + x*(-0.5 + x*(1./3
-     + x*(-0.25 + x*(0.2
-     + x*(-1./6 + x/7))))));
-}
-\end{lstlisting}
+\lstinputlisting[language=C]{src/log1p_horner.c}
 
 Several modern CPU architectures support instruction-level parallelism
 (ILP), which allows for the execution of multiple instructions at the
@@ -134,14 +122,7 @@ Horner's scheme.  However, in Estrin's form several terms can be
 executed in parallel, leading to a potential speed-up.  A C
 implementation using Estrin's scheme could read:
 %
-\begin{lstlisting}[language=C]
-double log1p_estrin(double x) {
-   const double y = x*x;
-   const double z = y*y;
-   return x + (x/3 - 0.5)*y
-      + (y*(-1./6 + x/7) + x/5 - 0.25)*z;
-}
-\end{lstlisting}
+\lstinputlisting[language=C]{src/log1p_estrin.c}
 
 To exploit ILP further, one could use a rational function
 approximation, such as a Padé approximant \cite{pade}, where the
@@ -159,29 +140,12 @@ reads
 %
 A naive C implementation of Eq.~\eqref{eq:pade} could read:
 %
-\begin{lstlisting}[language=C]
-double log1p_pade(double x) {
-   const double num = 1 + 517208./718121*x +
-      79040./2154363*x*x + 40./718121*x*x*x;
-   const double den = 1 + 876192./718121*x +
-      225120./718121*x*x + 640./718121*x*x*x;
-   return x*num/den;
-}
-\end{lstlisting}
+\lstinputlisting[language=C]{src/log1p_pade.c}
 %
 The numerator and the denominator of Eq.~\eqref{eq:pade} can be
 re-written using Estrin's scheme, allowing for further ILP:
 %
-\begin{lstlisting}[language=C]
-double log1p_mixed(double x) {
-   const double y = x*x;
-   const double num = 1 + 517208./718121*x +
-      y*(79040./2154363 + 40./718121*x);
-   const double den = 1 + 876192./718121*x +
-      y*(225120./718121 + 640./718121*x);
-   return x*num/den;
-}
-\end{lstlisting}
+\lstinputlisting[language=C]{src/log1p_mixed.c}
 %
 Note that the value $y=x^2$ can be re-used in the calculation of both
 the numerator and in the denominator.  This ``mixed'' implementation

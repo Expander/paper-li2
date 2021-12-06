@@ -4,6 +4,7 @@ PDF := $(NAM).pdf
 BIB := $(NAM).bib
 BBL := $(NAM).bbl
 TAR := $(NAM).tar.gz
+SRC := $(wildcard src/*.c)
 
 all: $(PDF)
 
@@ -19,5 +20,5 @@ distclean:
 $(PDF): $(TEX) $(BIB)
 	latexmk $(TEX)
 
-$(TAR): $(TEX) $(BIB) $(BBL)| all
+$(TAR): $(TEX) $(BIB) $(BBL) $(SRC) | all
 	tar --transform 's,^,paper/,' -czf $@ $^
