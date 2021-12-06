@@ -46,11 +46,11 @@ const double values[] = {
 int main() {
    const double eps = 1e-6;
 
-   for (int fi = 0; fi < sizeof(functions)/sizeof(functions[0]); ++fi) {
+   for (int i = 0; i < sizeof(functions)/sizeof(functions[0]); ++i) {
       for (int v = 0; v < sizeof(values)/sizeof(values[0]); ++v) {
-         const double (*f)(double) = functions[fi].f;
+         const double (*f)(double) = functions[i].f;
          const double val = values[v];
-         CHECK_CLOSE(val, f(val), log1p(val), eps, functions[fi].name);
+         CHECK_CLOSE(val, f(val), log1p(val), eps, functions[i].name);
       }
    }
 
