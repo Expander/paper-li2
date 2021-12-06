@@ -1,14 +1,39 @@
-\documentclass{scrartcl}
+\documentclass[10pt,DIV16,twocolumn]{scrartcl}
 
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage[german]{authblk}
+\usepackage[format=plain,labelfont={bf}]{caption}
+\usepackage{listings}
 \usepackage{hyperref}
 
 \newcommand{\mytitle}{Notes on the high-performance implementation of special functions}
 \newcommand{\myauthor}{Alexander Voigt}
+
+% source code highlighting
+\lstset{breaklines=true,
+  breakatwhitespace=true,
+  % numbers=left,
+  % stepnumber=1,
+  basicstyle=\ttfamily\lst@ifdisplaystyle\footnotesize\fi, % code block in smaller font
+  commentstyle=\ttfamily,
+  prebreak={\textbackslash},
+  breakindent=10pt,
+  breakautoindent=false,
+  showspaces=false,
+  showstringspaces=false,
+  frame=shadowbox,
+  rulesep=0.1em,
+  abovecaptionskip=0em,
+  aboveskip=1.5em,
+  belowcaptionskip=0.5em,
+  belowskip=1em,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{green},
+}
 
 \hypersetup{
   pdftitle   = {\mytitle},
@@ -22,6 +47,7 @@
 
 \title{\mytitle}
 \author{\myauthor}
+\affil{Fachbereich Energie und Biotechnologie, Hochschule Flensburg, Kanzleistraße 91--93, 24943 Flensburg, Germany}
 \date{\today}
 
 \begin{document}
@@ -34,6 +60,77 @@
 \cite{polylogarithm}
 
 \section{Comparison of algorithms}
+
+As an example we consider the function $\log(1+x)$, which has the
+following Taylor expansion around $x=0$ for $-1 < x \leq 1$:
+%
+\begin{align}
+  \log(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7},
+\end{align}
+%
+where terms of $O(x^8)$ have been omitted.
+In C this function could be implemented as follows:
+%
+\begin{lstlisting}[language=C]
+double log1p_naive(double x) {
+   return x - x*x/2 + x*x*x/3 - x*x*x*x/4
+      + x*x*x*x*x/5 - x*x*x*x*x*x/6
+      + x*x*x*x*x*x*x/7;
+}
+\end{lstlisting}
+%
+This naive implementation requires 26 floating-point multiplications
+and 6 floating-point additions.\footnote{Modern compilers usually
+  rewrite expensive floating-point divisions by a constant, such as
+  $x/2$, as less expensive floating-point multiplication by a
+  constant, for example as $0.5x$.}
+
+As is well known, the performante of this implementation can be
+improved by applying Horner's scheme, which reduces the number of
+expensive floating-point multiplications to 7 and requires 6
+additions:
+%
+\begin{align}
+  \log(1+x) \approx{}& x \Bigg\{1 + x \Bigg[-\frac{1}{2} + x \Bigg(\frac{1}{3} + x \Bigg\{-\frac{1}{4}  \notag \\
+  &+ x \Bigg[\frac{1}{5} + x\Bigg(-\frac{1}{6} + \frac{x}{7}\Bigg)\Bigg]\Bigg\}\Bigg)\Bigg]\Bigg\}.
+\end{align}
+%
+A C implementation using Horner's scheme could read
+%
+\begin{lstlisting}[language=C]
+double log1p_horner(double x) {
+   return x*(1 + x*(-0.5 + x*(1./3
+     + x*(-0.25 + x*(0.2
+     + x*(-1./6 + x/7))))));
+}
+\end{lstlisting}
+
+Several modern CPU architectures support instruction-level parallelism
+(ILP), which allows for the execution of multiple instructions at the
+same time.  To make use of ILP to reduce the execution time of the
+function, one could use Estrin's scheme \cite{estrin} to rewrite the
+function as
+%
+\begin{align}
+  \log(1+x) &\approx x + \left(\frac{x}{3}-\frac{1}{2}\right)
+    y+\left(\left(\frac{x}{7}-\frac{1}{6}\right)
+    y+\frac{x}{5}-\frac{1}{4}\right) z,
+\end{align}
+%
+where $y=x^2$ and $z=y^2$.  This form requires 8 floating-point
+multiplications and 6 additions, i.e.\ more multiplications than
+Horner's scheme.  However, in Estrin's form several terms can be
+executed in parallel, leading to a potential speed-up.  A C
+implementation using Estrin's scheme could read:
+%
+\begin{lstlisting}[language=C]
+double log1p_estrin(double x) {
+   const double y = x*x;
+   const double z = y*y;
+   return x + (x/3 - 0.5)*y
+      + (y*(-1./6 + x/7) + x/5 - 0.25)*z;
+}
+\end{lstlisting}
 
 \section{Conclusions}
 
