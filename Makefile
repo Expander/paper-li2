@@ -11,6 +11,12 @@ all: $(PDF)
 arxiv: $(TAR)
 	@true
 
+test-arxiv: arxiv
+	-rm -rf paper
+	tar -xf paper.tar.gz
+	cd paper && pdflatex paper.tex && pdflatex paper.tex
+	-rm -rf paper
+
 clean:
 	latexmk -c
 
