@@ -59,18 +59,22 @@
 
 \cite{polylogarithm}
 
-\section{Comparison of algorithms}
+\section{Performance comparison of different implementation strategies}
 
-As an example we consider the function $\log(1+x)$, which has the
-following Taylor expansion around $x=0$ for $-1 < x \leq 1$:
+As a toy example we consider the function $\log(1+x)$, which has the
+Taylor expansion
 %
 \begin{align}
-  \log(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7},
+  \log(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7}
   \label{eq:taylor}
 \end{align}
 %
-where terms of $O(x^8)$ have been omitted.
-In C this function could be implemented as follows:
+around $x=0$ for $x\in(-1,1]$, where terms of $O(x^8)$ and beyond have
+been omitted.  In the following we will briefly study various possible
+implementations of this function and compare the performance of the
+different implementations.  For brevity we will restrict ourselves to
+$x\in(-1,1]$.  In C the function in Eq.~\eqref{eq:taylor} could be
+implemented very naively as follows:
 %
 \begin{lstlisting}[language=C]
 double log1p_naive(double x) {
@@ -84,7 +88,9 @@ This naive implementation requires 26 floating-point multiplications
 and 6 floating-point additions.\footnote{Modern compilers usually
   rewrite expensive floating-point divisions by a constant, such as
   $x/2$, as less expensive floating-point multiplication by a
-  constant, for example as $0.5x$.}
+  constant, for example as $0.5x$.  In the following we will therefore
+  count a division of a variable by a constant as a floating-point
+  multiplication.}
 
 As is well known, the performante of this implementation can be
 improved by applying Horner's scheme, which reduces the number of
