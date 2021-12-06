@@ -157,14 +157,14 @@ reads
   \label{eq:pade}
 \end{align}
 %
-A C implementation of Eq.~\eqref{eq:pade} could read:
+A naive C implementation of Eq.~\eqref{eq:pade} could read:
 %
 \begin{lstlisting}[language=C]
 double log1p_pade(double x) {
-   const double num = 1 + 517208./718121*x
-      + 79040./2154363*x*x + 40./718121*x*x*x;
-   const double den = 1 + 876192./718121*x
-      + 225120./718121*x*x + 640./718121*x*x*x;
+   const double num = 1 + 517208./718121*x +
+      79040./2154363*x*x + 40./718121*x*x*x;
+   const double den = 1 + 876192./718121*x +
+      225120./718121*x*x + 640./718121*x*x*x;
    return x*num/den;
 }
 \end{lstlisting}
@@ -175,10 +175,10 @@ re-written using Estrin's scheme, allowing for further ILP:
 \begin{lstlisting}[language=C]
 double log1p_mixed(double x) {
    const double y = x*x;
-   const double num = 1 + 517208./718121*x
-      + y*(79040./2154363 + 40./718121*x);
-   const double den = 1 + 876192./718121*x
-      + y*(225120./718121 + 640./718121*x);
+   const double num = 1 + 517208./718121*x +
+      y*(79040./2154363 + 40./718121*x);
+   const double den = 1 + 876192./718121*x +
+      y*(225120./718121 + 640./718121*x);
    return x*num/den;
 }
 \end{lstlisting}
