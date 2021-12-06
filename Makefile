@@ -5,6 +5,7 @@ BIB := $(NAM).bib
 BBL := $(NAM).bbl
 TAR := $(NAM).tar.gz
 SRC := $(wildcard src/*.c)
+OBJ := $(SRC:.c=.o)
 
 all: $(PDF)
 
@@ -19,12 +20,19 @@ test-arxiv: arxiv
 
 clean:
 	latexmk -c
+	-rm -f $(OBJ)
 
-distclean:
+distclean: clean
 	latexmk -C
+
+compile: $(OBJ)
+	@true
 
 $(PDF): $(TEX) $(BIB)
 	latexmk $(TEX)
 
 $(TAR): $(TEX) $(BIB) $(BBL) $(SRC) | all
 	tar --transform 's,^,paper/,' -czf $@ $^
+
+%.o: %.c
+	$(CC) -O2 -c $< -o $@
