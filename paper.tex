@@ -185,6 +185,7 @@ For $|x|<1$ the real dilogarithm has the series representation
 %
 \begin{align}
   \Li(x) = \sum_{k=1}^\infty \frac{x^k}{k^2}.
+  \label{eq:series}
 \end{align}
 %
 Further series representations exist, for example the accelerated
@@ -204,6 +205,13 @@ terms of Chebyshev polynomials of the first kind $T_n(x)$ is given in
 \end{align}
 %
 which is used for example in the ROOT program library \cite{root}.
+Eqs.~\eqref{eq:series}--\eqref{eq:cheby} can be summed, for example
+using Horner's scheme or Clenshaw's algorithm \cite{clenshaw}.  These
+summation techniques are, however, purely sequential and thus do not
+make use of ILP.  In the following an approximation of the real
+dilogarithm is presented, which makes use of ILP, using a rational
+function approximation in combination with Estrin's scheme, similarly
+to the approach use in Eq.~\eqref{eq:mixed}.
 
 \section{Conclusions}
 
