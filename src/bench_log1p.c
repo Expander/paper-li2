@@ -24,7 +24,7 @@ int main() {
    srand(time(NULL));
 
    for (unsigned i = 0; i < N; ++i) {
-      values[i] = rand()/RAND_MAX;
+      values[i] = 1.0*rand()/RAND_MAX;
    }
 
    for (int i = 0; i < sizeof(functions)/sizeof(functions[0]); ++i) {
