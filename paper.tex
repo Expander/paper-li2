@@ -104,11 +104,10 @@ A C implementation using Horner's scheme could read
 %
 \lstinputlisting[language=C]{src/log1p_horner.c}
 
-Several modern CPU architectures support instruction\-/level parallelism
-(ILP), which allows for the execution of multiple instructions at the
-same time.  To make use of ILP to reduce the execution time of the
-function, one could use Estrin's scheme \cite{estrin} to rewrite the
-function as
+Several modern CPU architectures support instruction\-/level
+parallelism (ILP), which allows for the execution of multiple
+instructions at the same time.  To make use of ILP, one could use
+Estrin's scheme \cite{estrin} to rewrite the function as
 %
 \begin{align}
 \begin{split}
@@ -121,8 +120,10 @@ function as
 where $y=x^2$ and $z=y^2$.  This form requires 8 floating\-/point
 multiplications and 6 additions, i.e.\ more multiplications than
 Horner's scheme.  However, in Estrin's form several terms can be
-executed in parallel, leading to a potential speed-up.  A C
-implementation using Estrin's scheme could read:
+executed in parallel, leading to a potential speed-up if the cost of
+the additional multiplications is smaller than the gain by the
+parallel execution.  A C implementation using Estrin's scheme could
+read:
 %
 \lstinputlisting[language=C]{src/log1p_estrin.c}
 
@@ -147,12 +148,26 @@ A naive C implementation of Eq.~\eqref{eq:pade} could read:
 The numerator and the denominator of Eq.~\eqref{eq:pade} can be
 re-written using Estrin's scheme, allowing for further ILP:
 %
+\begin{align}
+  \log(1+x) \approx x
+  \frac{\left(\frac{320 x}{40143}+\frac{44320}{120429}\right)y+\frac{51064
+    x}{40143}+1}{\left(\frac{5120 x}{40143}+\frac{12320}{13381}\right)y+\frac{23712
+    x}{13381}+1},
+  \label{eq:mixed}
+\end{align}
+%
+where $y=x^2$.  A C implementation could read:
+%
 \lstinputlisting[language=C]{src/log1p_mixed.c}
 %
 Note that the value $y=x^2$ can be re-used in the calculation of both
 the numerator and in the denominator.  This ``mixed'' implementation
-requires 8 floating\-/point multiplications, 1 floating\-/point division
-and 6 additions.
+requires 8 floating\-/point multiplications, 1 floating\-/point
+division and 6 additions.  The rational function approximation
+\eqref{eq:mixed} may be faster for long numerator/denominator
+polynomials, where the cost of the floating\-/point division is
+smaller than the gain by the parallel execution.
+
 
 \section{Application to the implementation of the real dilogarithm}
 
