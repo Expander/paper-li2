@@ -34,10 +34,11 @@ const double values[] = {
       const double ab = fabs(b);                                        \
       const double mx = aa > ab ? aa : ab;                              \
       const double ae = fabs(eps);                                      \
-      if (fabs(aa - ab) < ae*(1 + mx)) {                                \
+      const double rel = fabs(aa - ab)/(1 + mx);                        \
+      if (rel < ae) {                                                   \
          passed++;                                                      \
       } else {                                                          \
-         printf("Error in %s(%g): %g ~!~ %g with eps = %g\n", name, val, aa, ab, ae); \
+         printf("Error in %s(%g): %g ~!~ %g (rel. diff. %g < %g)\n", name, val, aa, ab, rel, ae); \
          failed++;                                                      \
       }                                                                 \
    } while (0);
