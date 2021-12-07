@@ -174,7 +174,7 @@ smaller than the gain by the parallel execution.
 
 As an application we consider the implementation of the real
 dilogarithm, which appears in many physics applications, for example
-in the calculation of quantum corrections in quantum electrodynamics.
+in the calculation of quantum corrections in quantum field theory.
 The real dilogarithm is defined as
 %
 \begin{align}
@@ -216,10 +216,17 @@ Estrin's scheme, similarly to the approach use in
 Eq.~\eqref{eq:mixed}.
 
 We will define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$
-as the real part of the complex continuation $\Li(z)$,
-$z\in\mathbb{C}$.  The function can be mapped onto the interval
-$[0,1/2)$ by using the following identities:
-
+as the real part of the complex continuation of the dilogarithm.  The
+real dilogarithm can be mapped onto the interval $[0,1/2)$ by using
+the following identities:
+%
+\begin{align}
+  \Li(x) &= -\Li\left(\frac{1}{1-x}\right) - \frac{\pi^2}{6} + \log(1-x)\left[\frac{1}{2}\log(1-x) - \log(-x)\right], \quad (x<-1), \\
+  \Li(x) &= -\Li\left(\frac{x}{x-1}\right) - \frac{1}{2}\log^2(x), \quad (-1<x<0), \\
+  \Li(x) &= -\Li(1-x) + \frac{\pi^2}{6} - \log(x) \log(1-x), \quad (\frac{1}{2}\leq x<1), \\
+  \Li(x) &= \Li\left(1-\frac{1}{x}\right) + \frac{\pi^2}{6} - \log(x)\left[\log\left(1-\frac{1}{x}\right) + \frac{1}{2}\log(x)\right], \quad (1<x<2), \\
+  \Li(x) &= -\Li\left(\frac{1}{x}\right) + \frac{\pi^2}{3} - \frac{1}{2} \log^2(x), \quad (x\geq 2).
+\end{align}
 
 \section{Conclusions}
 
