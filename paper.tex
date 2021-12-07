@@ -172,17 +172,20 @@ For $|x|<1$ the real dilogarithm has the series representation
   \Li(x) = \sum_{k=1}^\infty \frac{x^k}{k^2}.
 \end{align}
 %
-Further series representations exist, for example
+Further series representations exist, for example the accelerated
+series
 %
 \begin{align}
   \Li(x) = \sum_{k=0}^\infty \frac{B_k}{(k+1)!} [-\log(1-x)]^{k+1},
 \end{align}
 %
-where $B_k$ are the Bernoulli numbers.  A representation in terms
-of Chebyshev polynomials also exists \cite{luke},
+where $B_k$ are the Bernoulli numbers.  A series representation in
+terms of Chebyshev polynomials of the first kind $T_n(x)$ is given in
+\cite{luke},
 %
 \begin{align}
-  \Li(x) = \sum_{k=0}^\infty a_n T_n^*(x),
+  \Li(x) = \sum_{k=0}^\infty a_n T_n(2x-1),
+  \label{eq:cheby}
 \end{align}
 %
 which is used for example in the ROOT program library \cite{root}.
