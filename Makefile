@@ -32,7 +32,7 @@ test-arxiv: arxiv
 	cd paper && pdflatex paper.tex && pdflatex paper.tex
 	-rm -rf paper
 
-$(PDF): $(TEX) $(BIB)
+$(PDF): $(TEX) $(BIB) $(SRC)
 	latexmk $(TEX)
 
 $(TAR): $(TEX) $(BIB) $(BBL) $(SRC) | all

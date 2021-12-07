@@ -1,8 +1,8 @@
 double log1p_mixed(double x) {
    const double y = x*x;
-   const double num = 1 + 517208./718121*x +
-      y*(79040./2154363 + 40./718121*x);
-   const double den = 1 + 876192./718121*x +
-      y*(225120./718121 + 640./718121*x);
+   const double num = 1 + 51064./40143*x +
+      y*(44320./120429 + 320./40143*x);
+   const double den = 1 + 23712./13381*x +
+      y*(12320./13381 + 5120./40143*x);
    return x*num/den;
 }

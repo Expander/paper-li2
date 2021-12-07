@@ -44,7 +44,7 @@ const double values[] = {
 
 
 int main() {
-   const double eps = 1e-5;
+   const double eps = 1e-6;
 
    for (int i = 0; i < sizeof(functions)/sizeof(functions[0]); ++i) {
       for (int v = 0; v < sizeof(values)/sizeof(values[0]); ++v) {
