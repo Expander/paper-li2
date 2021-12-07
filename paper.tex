@@ -3,7 +3,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
 \usepackage[german]{authblk}
 \usepackage[format=plain,labelfont={bf}]{caption}
 \usepackage{listings}
@@ -206,13 +206,20 @@ terms of Chebyshev polynomials of the first kind $T_n(x)$ is given in
 \end{align}
 %
 which is used for example in the ROOT program library \cite{root}.
-Eqs.~\eqref{eq:series}--\eqref{eq:cheby} can be summed, for example
-using Horner's scheme or Clenshaw's algorithm \cite{clenshaw}.  These
-summation techniques are, however, purely sequential and thus do not
-make use of ILP.  In the following an approximation of the real
-dilogarithm is presented, which makes use of ILP, using a rational
-function approximation in combination with Estrin's scheme, similarly
-to the approach use in Eq.~\eqref{eq:mixed}.
+The r.h.s.\ of Eqs.~\eqref{eq:series}--\eqref{eq:cheby} can be summed,
+for example, using Horner's scheme or Clenshaw's algorithm
+\cite{clenshaw}.  These summation techniques are, however, purely
+sequential and thus do not make use of ILP.  In the following an
+approximation of the real dilogarithm is presented, which makes use of
+ILP, using a rational function approximation in combination with
+Estrin's scheme, similarly to the approach use in
+Eq.~\eqref{eq:mixed}.
+
+We will define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$
+as the real part of the complex continuation $\Li(z)$,
+$z\in\mathbb{C}$.  The function can be mapped onto the interval
+$[0,1/2)$ by using the following identities:
+
 
 \section{Conclusions}
 
