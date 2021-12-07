@@ -8,6 +8,7 @@
 \usepackage[format=plain,labelfont={bf}]{caption}
 \usepackage{listings}
 \usepackage[shortcuts]{extdash} % \-/
+\usepackage{xcolor}
 \usepackage{hyperref}
 
 \newcommand{\mytitle}{The performance gain of instruction-level parallelism on the evaluation of special functions}
@@ -34,7 +35,7 @@
   belowskip=1em,
   keywordstyle=\color{blue},
   stringstyle=\color{red},
-  commentstyle=\color{green},
+  commentstyle=\color{gray},
 }
 
 \hypersetup{
@@ -214,6 +215,13 @@ function approximation in combination with Estrin's scheme, similarly
 to the approach use in Eq.~\eqref{eq:mixed}.
 
 \section{Conclusions}
+
+\appendix
+
+\section{Implementation of the dilogarithm}
+
+\lstinputlisting[language=C]{src/Li2.c}
+
 
 \bibliographystyle{ieeetr}
 \bibliography{paper}
