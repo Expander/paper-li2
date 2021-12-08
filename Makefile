@@ -3,6 +3,7 @@ TEX := $(NAM).tex
 PDF := $(NAM).pdf
 BIB := $(NAM).bib
 BBL := $(NAM).bbl
+STY := widetext.sty
 TAR := $(NAM).tar.gz
 SRC := $(wildcard src/log1p_*.c) anc/Li2.c
 OBJ := $(SRC:.c=.o)
@@ -37,10 +38,10 @@ test-arxiv: arxiv
 	cd paper && pdflatex paper.tex && pdflatex paper.tex
 	-rm -rf paper
 
-$(PDF): $(TEX) $(BIB) $(SRC)
+$(PDF): $(TEX) $(BIB) $(SRC) $(STY)
 	latexmk $(TEX)
 
-$(TAR): $(TEX) $(BIB) $(BBL) $(SRC) | all
+$(TAR): $(TEX) $(BIB) $(BBL) $(SRC) $(STY) | all
 	tar --transform 's,^,paper/,' -czf $@ $^
 
 %.o: %.c
