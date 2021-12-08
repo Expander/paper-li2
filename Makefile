@@ -4,7 +4,7 @@ PDF := $(NAM).pdf
 BIB := $(NAM).bib
 BBL := $(NAM).bbl
 TAR := $(NAM).tar.gz
-SRC := $(wildcard src/log1p_*.c) src/Li2.c
+SRC := $(wildcard src/log1p_*.c) anc/Li2.c
 OBJ := $(SRC:.c=.o)
 LIB := src/log1p.a
 TST := src/test_log1p.x
