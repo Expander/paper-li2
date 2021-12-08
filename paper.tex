@@ -192,12 +192,11 @@ polynomials, where the cost of the floating\-/point division is
 smaller than the gain by the parallel execution.
 
 
-\section{Application to the implementation of the real dilogarithm}
+\section{An ILP-aware algorithm for the real dilogarithm}
 
-As an application we consider the implementation of the real
-dilogarithm, which appears in many physics applications, for example
-in the calculation of quantum corrections in quantum field theory.
-The real dilogarithm is defined as
+In the following an ILP-aware implementation of the real dilogarithm
+is presented, which allows for the parallel execution of different
+floating\-/point operations.  The real dilogarithm is defined as
 %
 \begin{align}
   \Li(x) &= -\int_0^x \frac{\ln(1-t)}{t}dt, &
@@ -237,9 +236,9 @@ ILP, using a rational function approximation in combination with
 Estrin's scheme, similarly to the approach use in
 Eq.~\eqref{eq:mixed}.
 
-We will define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$
-as the real part of its complex continuation.  The real dilogarithm
-can be mapped onto the interval $[0,1/2]$ by using the following
+We define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$ as
+the real part of its complex continuation.  The real dilogarithm can
+be mapped onto the interval $[0,1/2]$ by using the following
 identities:
 %
 \begin{widetext}%
