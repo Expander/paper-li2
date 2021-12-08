@@ -1,4 +1,4 @@
-\documentclass[10pt,DIV16,twocolumn]{scrartcl}
+\documentclass[10pt,DIV16,twocolumn,numbers=noenddot]{scrartcl}
 
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
@@ -71,9 +71,9 @@ beyond the Standard Model of particle physics with a large parameter
 space require the evaluation of the dilogarithm (and other functions)
 billions of times.  Such investigations thus require a fast evaluation
 of the dilogarithm.  In the past many time-efficient algorithms have
-been proposed \cite{}, which are implemented, for example, in program
-libraries for numerical physics and mathematics
-\cite{root,gsl,cephes}.
+been invented (see e.g.~\cite{koelbigDilog,ginsberg,morris}) and many
+are implemented, for example, in general-purpose physics and
+mathematics program libraries \cite{root,gsl,cephes}.
 
 The development of modern CPUs with support for instruction\-/level
 parallelism (ILP) opens the opportunity for a further reduction of the
@@ -258,7 +258,7 @@ $\Li(-1)=-\pi^2/12$.
 \section{Conclusions}
 
 C, C++ and FORTRAN implementations of the presented algorithm can be
-found in the Polylogarithm package \cite{polylogarithm}.
+found in the Polylogarithm library \cite{polylogarithm}.
 
 \appendix
 
