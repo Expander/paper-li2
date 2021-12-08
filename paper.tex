@@ -59,9 +59,29 @@
 
 \section*{Abstract}
 
+An algorithm for the computation of the real dilogarithm is presented,
+which allows for the use of instruction\-/level parallelism.
+
 \section{Introduction}
 
-\cite{polylogarithm}
+The dilogarithm \cite{lewin} is a special function, which appears in
+many physics applications, for example in the calculation of quantum
+corrections in quantum field theory.  The investigation of new models
+beyond the Standard Model of particle physics with a large parameter
+space require the evaluation of the dilogarithm (and other functions)
+billions of times.  Such investigations thus require a fast evaluation
+of the dilogarithm.  In the past many time-efficient algorithms have
+been proposed \cite{}, which are implemented in program libraries for
+numerical physics and mathematics \cite{root,gsl}.
+
+The development of modern CPUs with support for instruction\-/level
+parallelism (ILP) opens the opportunity for a further reduction of the
+runtime of the calculation of the dilogarithm, given an appropriate
+formulation of the algorithm.  In this paper an algorithm for the
+calculation of the real dilogarithm $\Li$ is presented, which makes
+use of ILP, resulting in a reduced runtime compared to the algorithms
+presented so far.  A C implementation of this algorithm can be found
+in the appendix and in the arXiv submission of this paper.
 
 \section{Comparison of different implementation strategies}
 
@@ -235,6 +255,9 @@ as well as the special values $\Li(0)=0$, $\Li(1)=\pi^2/6$ and
 $\Li(-1)=-\pi^2/12$.
 
 \section{Conclusions}
+
+C, C++ and FORTRAN implementations of the presented algorithm can be
+found in the Polylogarithm package \cite{polylogarithm}.
 
 \appendix
 
