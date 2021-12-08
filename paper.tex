@@ -65,11 +65,11 @@
 
 \section{Comparison of different implementation strategies}
 
-As a toy example we consider the function $\log(1+x)$, which has the
+As a toy example we consider the function $\ln(1+x)$, which has the
 Taylor expansion
 %
 \begin{align}
-  \log(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7}
+  \ln(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7}
   \label{eq:taylor}
 \end{align}
 %
@@ -97,7 +97,7 @@ additions:
 %
 \begin{align}
 \begin{split}
-  \log(1+x) \approx{}& x \Bigg\{1 + x \Bigg[-\frac{1}{2} + x \Bigg(\frac{1}{3} + x \Bigg\{-\frac{1}{4} \\
+  \ln(1+x) \approx{}& x \Bigg\{1 + x \Bigg[-\frac{1}{2} + x \Bigg(\frac{1}{3} + x \Bigg\{-\frac{1}{4} \\
   &+ x \Bigg[\frac{1}{5} + x\Bigg(-\frac{1}{6} + \frac{x}{7}\Bigg)\Bigg]\Bigg\}\Bigg)\Bigg]\Bigg\}.
 \end{split}\label{eq:horner}%
 \end{align}
@@ -113,7 +113,7 @@ Estrin's scheme \cite{estrin} to rewrite the function as
 %
 \begin{align}
 \begin{split}
-  \log(1+x) \approx{}& x + \left(\frac{x}{3}-\frac{1}{2}\right)
+  \ln(1+x) \approx{}& x + \left(\frac{x}{3}-\frac{1}{2}\right)
     y \\ &+\left[\left(\frac{x}{7}-\frac{1}{6}\right)
     y+\frac{x}{5}-\frac{1}{4}\right] z,
 \end{split}\label{eq:estrin}%
@@ -132,11 +132,11 @@ read:
 To exploit ILP further, one could use a rational function
 approximation, such as a Padé approximant \cite{pade}, where the
 numerator and the denominator can be calculated in parallel.  A Padé
-approximant of $\log(1+x)$ at the same order as Eq.~\eqref{eq:taylor}
+approximant of $\ln(1+x)$ at the same order as Eq.~\eqref{eq:taylor}
 reads
 %
 \begin{align}
-  \log(1+x) \approx x
+  \ln(1+x) \approx x
   \frac{\frac{320 x^3}{40143}+\frac{44320 x^2}{120429}+\frac{51064
     x}{40143}+1}{\frac{5120 x^3}{40143}+\frac{12320 x^2}{13381}+\frac{23712
     x}{13381}+1}.
@@ -151,7 +151,7 @@ The numerator and the denominator of Eq.~\eqref{eq:pade} can be
 re-written using Estrin's scheme, allowing for further ILP:
 %
 \begin{align}
-  \log(1+x) \approx x
+  \ln(1+x) \approx x
   \frac{\left(\frac{320 x}{40143}+\frac{44320}{120429}\right)y+\frac{51064
     x}{40143}+1}{\left(\frac{5120 x}{40143}+\frac{12320}{13381}\right)y+\frac{23712
     x}{13381}+1},
@@ -179,7 +179,7 @@ in the calculation of quantum corrections in quantum field theory.
 The real dilogarithm is defined as
 %
 \begin{align}
-  \Li(x) &= -\int_0^x \frac{\log(1-t)}{t}dt, &
+  \Li(x) &= -\int_0^x \frac{\ln(1-t)}{t}dt, &
   &(x<1).
 \end{align}
 %
@@ -194,7 +194,7 @@ Further series representations exist, for example the accelerated
 series
 %
 \begin{align}
-  \Li(x) = \sum_{k=0}^\infty \frac{B_k}{(k+1)!} [-\log(1-x)]^{k+1},
+  \Li(x) = \sum_{k=0}^\infty \frac{B_k}{(k+1)!} [-\ln(1-x)]^{k+1},
 \end{align}
 %
 where $B_k$ are the Bernoulli numbers.  A series representation in
@@ -223,11 +223,11 @@ identities:
 %
 \begin{widetext}%
 \begin{align}%
-  \Li(x) &= \Li\left(\frac{1}{1-x}\right) - \frac{\pi^2}{6} + \log(1-x)\left[\frac{1}{2}\log(1-x) - \log(-x)\right], && (x<-1), \\
-  \Li(x) &= -\Li\left(\frac{x}{x-1}\right) - \frac{1}{2}\log^2(1-x), && (-1<x<0), \\
-  \Li(x) &= -\Li(1-x) + \frac{\pi^2}{6} - \log(x) \log(1-x), && (\frac{1}{2}\leq x<1), \\
-  \Li(x) &= \Li\left(1-\frac{1}{x}\right) + \frac{\pi^2}{6} - \log(x)\left[\log\left(1-\frac{1}{x}\right) + \frac{1}{2}\log(x)\right], && (1<x<2), \\
-  \Li(x) &= -\Li\left(\frac{1}{x}\right) + \frac{\pi^2}{3} - \frac{1}{2} \log^2(x), && (x\geq 2),%
+  \Li(x) &= \Li\left(\frac{1}{1-x}\right) - \frac{\pi^2}{6} + \ln(1-x)\left[\frac{1}{2}\ln(1-x) - \ln(-x)\right], && (x<-1), \\
+  \Li(x) &= -\Li\left(\frac{x}{x-1}\right) - \frac{1}{2}\ln^2(1-x), && (-1<x<0), \\
+  \Li(x) &= -\Li(1-x) + \frac{\pi^2}{6} - \ln(x) \ln(1-x), && (\frac{1}{2}\leq x<1), \\
+  \Li(x) &= \Li\left(1-\frac{1}{x}\right) + \frac{\pi^2}{6} - \ln(x)\left[\ln\left(1-\frac{1}{x}\right) + \frac{1}{2}\ln(x)\right], && (1<x<2), \\
+  \Li(x) &= -\Li\left(\frac{1}{x}\right) + \frac{\pi^2}{3} - \frac{1}{2} \ln^2(x), && (x\geq 2),%
 \end{align}%
 \end{widetext}%
 %
