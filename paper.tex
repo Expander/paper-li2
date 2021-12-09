@@ -77,8 +77,10 @@ mathematics program libraries \cite{root,gsl,cephes}.
 
 The development of modern CPUs with support for instruction\-/level
 parallelism (ILP) opens the opportunity for a further reduction of the
-runtime of the calculation of the dilogarithm, given an appropriate
-formulation of the algorithm.  In this paper an algorithm for the
+runtime of the calculation of the dilogarithm.  To make use of ILP,
+the algorithm to calculate the dilogarithm must be formulated
+appropriately in order to allow for the parallel execution of multiple
+floating\-/point operations.  In this paper an algorithm for the
 calculation of the real dilogarithm $\Li$ is presented, which makes
 use of ILP, resulting in a reduced runtime compared to the algorithms
 presented so far.  A C implementation of this algorithm can be found
