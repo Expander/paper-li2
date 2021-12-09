@@ -269,7 +269,28 @@ identities:
 \end{widetext}%
 %
 as well as the special values $\Li(0)=0$, $\Li(1)=\pi^2/6$ and
-$\Li(-1)=-\pi^2/12$.
+$\Li(-1)=-\pi^2/12$.  Within the interval $[0,1/2]$ the real
+dilogarithm has the series expansion \eqref{eq:series}, which can be
+written as
+%
+\begin{align}
+  \Li(x) = x \sum_{k=0} \frac{x^{k}}{(k+1)^2}.
+  \label{eq:series2}
+\end{align}
+%
+We approximate the sum on the r.h.s.\ of Eq.~\eqref{eq:series2} using
+an economized Padé approximant on the interval $[0,1/2]$ using the
+\texttt{EconomizedRationalApproximation} from Wolfram/Mathematica
+\cite{mathematica},
+%
+\begin{align}
+  \sum_{k=0} \frac{x^{k}}{(k+1)^2} =
+  \frac{\sum_{i=0}^7 a_iy^i}{\sum_{j=0}^7 b_jy^j},
+\end{align}
+%
+where $y=1/4$ is the midpoint of the interval $[0,1/2]$.  The
+coefficients $a_i$ and $b_j$ ($i,j=0,\ldots,7$) are listed in
+\tabref{tab:coeffs}.
 
 In \tabref{tab:runtime} the runtime of different C implementations is
 compared on two different CPU architectures.  On each architecture the
