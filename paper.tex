@@ -15,6 +15,7 @@
 \newcommand{\mytitle}{An algorithm for the calculation of the real dilogarithm with instruction-level parallelism}
 \newcommand{\myauthor}{Alexander Voigt}
 \newcommand{\Li}{\operatorname{Li}_2}
+\newcommand{\secref}[1]{Section~\ref{#1}}
 
 % source code highlighting
 \lstset{breaklines=true,
@@ -83,10 +84,17 @@ appropriately in order to allow for the parallel execution of multiple
 floating\-/point operations.  In this paper an algorithm for the
 calculation of the real dilogarithm $\Li$ is presented, which makes
 use of ILP, resulting in a reduced runtime compared to the algorithms
-presented so far.  A C implementation of this algorithm can be found
-in the appendix and in the arXiv submission of this paper.
+presented so far.
+
+This paper is organized as follows: In \secref{sec:toymodel} different
+implementation strategies are discussed using a toy example function.
+In \secref{sec:algorithm} an ILP-aware algorithm for the numerical
+calculation of the dilogarithm is presented.  A C implementation of
+this algorithm can be found in the appendix and in the arXiv
+submission of this paper.
 
 \section{Comparison of different implementation strategies}
+\label{sec:toymodel}
 
 As a toy example we consider the function $\ln(1+x)$, which has the
 Taylor expansion
@@ -195,6 +203,7 @@ smaller than the gain by the parallel execution.
 
 
 \section{An ILP-aware algorithm for the real dilogarithm}
+\label{sec:algorithm}
 
 In the following an ILP-aware implementation of the real dilogarithm
 is presented, which allows for the parallel execution of different
