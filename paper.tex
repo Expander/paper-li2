@@ -233,8 +233,11 @@ for example, using Horner's scheme or Clenshaw's algorithm
 sequential and thus do not make use of ILP.  In the following an
 approximation of the real dilogarithm is presented, which makes use of
 ILP, using a rational function approximation in combination with
-Estrin's scheme, similarly to the approach use in
-Eq.~\eqref{eq:mixed}.
+Estrin's scheme, similar to the approach used in
+Eq.~\eqref{eq:mixed}.%
+\footnote{The Cephes library \cite{cephes} implements an equivalent
+  rational function approximation for Spence's function
+  $\operatorname{Sp}(x)=\Li(1-x)$.}
 
 We define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$ as
 the real part of its complex continuation.  The real dilogarithm can
