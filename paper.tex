@@ -303,16 +303,17 @@ values $x\in[-5,5]$.
   \centering
   \caption{Runtime in seconds for the calculation of $\Li(x)$ for
     different implementations on different CPU architectures.}
-  \begin{tabular}{lc}
+  \begin{tabular}{lcc}
     \toprule
-    Implementation & i5-8265U \\
+    Implementation & i5-8265U & i7-5600U \\
     \midrule
-    this paper & $0.022$ \\
-    Morris \cite{morris} & $0.022$ \\
-    Cephes \cite{cephes} & $0.028$ \\
-    Algorithm 327 \cite{koelbigDilog} & $0.031$ \\
-    Chebyshev \cite{luke} & $0.058$ \\
-    Algorithm 490 \cite{ginsberg} & $0.059$ \\
+    this paper & $0.022$ & $0.027$ \\
+    Morris \cite{morris} & $0.022$ & $0.027$ \\
+    Cephes \cite{cephes} & $0.028$ & $0.034$ \\
+    Algorithm 327 \cite{koelbigDilog} & $0.031$ & $0.035$ \\
+    Chebyshev \cite{luke} & $0.058$ & $0.060$ \\
+    Algorithm 490 \cite{ginsberg} & $0.059$ & $0.071$ \\
+    GSL \cite{gsl} & & $0.155$ \\
     \bottomrule
   \end{tabular}
   \label{tab:runtime}
