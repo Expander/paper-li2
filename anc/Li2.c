@@ -23,7 +23,6 @@ double li2(double x)
 
    double y = 0, r = 0, s = 1;
 
-   /* transform to [0, 1/2] */
    if (x < -1) {
       const double l = log(1 - x);
       y = 1/(1 - x);
