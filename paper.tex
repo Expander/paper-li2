@@ -255,20 +255,20 @@ Eq.~\eqref{eq:mixed}.%
 We define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$ as
 the real part of its complex continuation.  The real dilogarithm can
 be mapped onto the interval $[0,1/2]$ by using the following
-identities:
+identities \cite{lewin}:
 %
 \begin{align}%
-  \Li(x) &= \Li\left(\frac{1}{1-x}\right) - \frac{\pi^2}{6} + \ln(1-x)\left[\frac{1}{2}\ln(1-x) - \ln(-x)\right], && (x<-1), \\
-  \Li(x) &= -\Li\left(\frac{x}{x-1}\right) - \frac{1}{2}\ln^2(1-x), && (-1<x<0), \\
-  \Li(x) &= -\Li(1-x) + \frac{\pi^2}{6} - \ln(x) \ln(1-x), && (\frac{1}{2}\leq x<1), \\
-  \Li(x) &= \Li\left(1-\frac{1}{x}\right) + \frac{\pi^2}{6} - \ln(x)\left[\ln\left(1-\frac{1}{x}\right) + \frac{1}{2}\ln(x)\right], && (1<x<2), \\
-  \Li(x) &= -\Li\left(\frac{1}{x}\right) + \frac{\pi^2}{3} - \frac{1}{2} \ln^2(x), && (x\geq 2),%
+  \Li(x) ={}& \Li\left(\frac{1}{1-x}\right) - \frac{\pi^2}{6} \notag \\ &+ \ln(1-x)\left[\frac{1}{2}\ln(1-x) - \ln(-x)\right], \\ % (x<-1), \\
+  \Li(x) ={}& -\Li\left(\frac{x}{x-1}\right) - \frac{1}{2}\ln^2(1-x), \\ % (-1<x<0), \\
+  \Li(x) ={}& -\Li(1-x) + \frac{\pi^2}{6} - \ln(x) \ln(1-x), \\ % (\frac{1}{2}\leq x<1), \\
+  \Li(x) ={}& \Li\left(1-\frac{1}{x}\right) + \frac{\pi^2}{6} \notag \\ &- \ln(x)\left[\ln\left(1-\frac{1}{x}\right) + \frac{1}{2}\ln(x)\right], \\ % (1<x<2), \\
+  \Li(x) ={}& -\Li\left(\frac{1}{x}\right) + \frac{\pi^2}{3} - \frac{1}{2} \ln^2(x), % (x\geq 2),%
 \end{align}%
 %
-as well as the special values $\Li(0)=0$, $\Li(1)=\pi^2/6$ and
-$\Li(-1)=-\pi^2/12$.  Within the interval $[0,1/2]$ the real
-dilogarithm has the series expansion \eqref{eq:series}, which can be
-written as
+and by using the special values $\Li(-1)=-\pi^2/12$, $\Li(0)=0$,
+$\Li(1/2)=\pi^2/12-\ln^2(2)/2$, $\Li(1)=\pi^2/6$ and $\Li(2)=\pi^2/4$.
+Within the interval $[0,1/2]$ the real dilogarithm has the series
+expansion \eqref{eq:series}, which can be written as
 %
 \begin{align}
   \Li(x) = x \sum_{k=0}^\infty \frac{x^{k}}{(k+1)^2}.
