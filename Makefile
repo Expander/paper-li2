@@ -3,7 +3,7 @@ TEX := $(NAM).tex
 PDF := $(NAM).pdf
 BIB := $(NAM).bib
 BBL := $(NAM).bbl
-STY := widetext.sty
+STY :=
 TAR := $(NAM).tar.gz
 SRC := $(wildcard src/log1p_*.c) anc/Li2.c
 OBJ := $(SRC:.c=.o)
