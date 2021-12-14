@@ -352,11 +352,12 @@ values $x\in[-5,5]$.
   \label{tab:runtime}
 \end{table}
 %
-We find that the implementation presented in this paper is fastest
-among the ones shown in the table.  The next-to fastest implementation
-is provided by Cephes, which is only $\sim 20\%$ slower.  The short
-runtime of Cephes stems from the fact that Cephes also uses a rational
-function approximation, where the numerator and the denominator can be
+We find that the implementation presented in this paper and the
+approach presented in \cite{morris} are fastest among the ones shown
+in the table.  The next-to fastest implementation is provided by
+Cephes, which is only $\sim 20\%$ slower.  The short runtime of Cephes
+stems from the fact that Cephes also uses a rational function
+approximation, where the numerator and the denominator can be
 evaluated in parallel.  However, Cephes evaluates the polynomials in
 the numerator and denominator using Horner's scheme, which is purely
 sequential.  Furthermore, for $x>1$ Cephes calculates $\ln(x)$ twice,
