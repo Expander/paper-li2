@@ -108,22 +108,22 @@ Taylor expansion
   \label{eq:taylor}
 \end{align}
 %
-around $x=0$ for $x\in(-1,1]$, where terms of $O(x^8)$ and beyond have
-been omitted.  In the following we will briefly show various possible
-implementations of this function and discuss the performance of the
-different implementations.  For brevity we will restrict ourselves to
-$x\in(-1,1]$.  In C the function in Eq.~\eqref{eq:taylor} could be
-implemented very naively as follows:
+around $x=0$ for $x\in(-1,1]$.  In Eq.~\eqref{eq:taylor} terms of
+$O(x^8)$ and beyond have been omitted for brevity.  In the following
+we will briefly show various possible implementations of this function
+and discuss the performance of the different implementations.  For
+brevity we will restrict ourselves to $x\in(-1,1]$.  In C the function
+in Eq.~\eqref{eq:taylor} could be implemented very naively as follows:
 %
 \lstinputlisting[language=C]{src/log1p_naive.c}
 %
 This naive implementation requires 26 floating\-/point multiplications
 and 6 floating\-/point additions.\footnote{Modern compilers usually
   rewrite expensive floating\-/point divisions by a constant, such as
-  $x/2$, as less expensive floating\-/point multiplication by a
+  $x/2$, as less expensive floating\-/point multiplications by a
   constant, for example as $0.5x$.  In the following we will therefore
-  count a division of a variable by a constant as a floating\-/point
-  multiplication.}
+  count a division of a floating\-/point variable by a constant as a
+  floating\-/point multiplication.}
 
 As is well known, the performante of this naive implementation can be
 improved by applying Horner's scheme, which reduces the number of
@@ -140,6 +140,10 @@ additions:
 A C implementation using Horner's scheme could read
 %
 \lstinputlisting[language=C]{src/log1p_horner.c}
+%
+Note, that the formulation using Horner's scheme requires the
+evaluation of the floating\-/point operations in strictly sequential
+order.
 
 Several modern CPU architectures support instruction\-/level
 parallelism (ILP), which allows for the execution of multiple
@@ -203,7 +207,8 @@ requires 8 floating\-/point multiplications, 1 floating\-/point
 division and 6 additions.  The rational function approximation
 \eqref{eq:mixed} may be faster for long numerator/denominator
 polynomials, where the cost of the floating\-/point division is
-smaller than the gain by the parallel execution.
+smaller than the gain by the parallel execution of the terms in the
+numerator and denominator.
 
 
 \section{An ILP-aware algorithm for the real dilogarithm}
