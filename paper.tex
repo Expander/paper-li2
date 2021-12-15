@@ -82,22 +82,25 @@ been invented (see e.g.~\cite{koelbigDilog,ginsberg,morris}) and many
 are implemented, for example, in general-purpose physics and
 mathematics program libraries \cite{root,gsl,cephes}.
 
-The development of modern CPUs with support for instruction\-/level
+Many of the publicly available implementations, e.g.\ \cite{root,gsl},
+use formulations for the approximation of the dilogarithm with a
+strictly sequential execution of floating\-/point operations.  The
+development of modern CPUs with support for instruction\-/level
 parallelism (ILP) opens the opportunity for a further reduction of the
 runtime of the calculation of the dilogarithm.  To make use of ILP,
 the algorithm to calculate the dilogarithm must be formulated
 appropriately in order to allow for the parallel execution of multiple
-floating\-/point operations.  In this paper an algorithm for the
+floating\-/point operations.  In this paper a method for the
 calculation of the real dilogarithm $\Li$ is presented, which makes
 use of ILP, potentially resulting in a reduced runtime compared to
-most algorithms presented so far.
+many algorithms presented so far.
 
 This paper is organized as follows: In \secref{sec:toymodel} different
 implementation strategies are discussed using a toy example function.
-In \secref{sec:algorithm} an ILP-aware algorithm for the numerical
+In \secref{sec:algorithm} an ILP-aware method for the numerical
 calculation of the dilogarithm is presented.  A C implementation of
-this algorithm can be found in the appendix and in the arXiv
-submission of this paper.
+this method can be found in the appendix and in the arXiv submission
+of this paper.
 
 \section{Comparison of implementation strategies}
 \label{sec:toymodel}
@@ -208,7 +211,7 @@ smaller than the gain by the parallel execution of the terms in the
 numerator and denominator.
 
 
-\section{An ILP-aware algorithm for the real dilogarithm}
+\section{An ILP-aware method for the real dilogarithm}
 \label{sec:algorithm}
 
 In the following an ILP-aware implementation of the real dilogarithm
