@@ -120,12 +120,7 @@ in Eq.~\eqref{eq:taylor} could be implemented very naively as follows:
 \lstinputlisting[language=C]{src/log1p_naive.c}
 %
 This naive implementation requires 26 floating\-/point multiplications
-and 6 floating\-/point additions.\footnote{Modern compilers usually
-  rewrite expensive floating\-/point divisions by a constant, such as
-  $x/2$, as less expensive floating\-/point multiplications by a
-  constant, for example as $0.5x$.  In the following we will therefore
-  count a division of a floating\-/point variable by a constant as a
-  floating\-/point multiplication.}
+and 6 floating\-/point additions.
 
 As is well known, the performante of this naive implementation can be
 improved by applying Horner's scheme, which reduces the number of
