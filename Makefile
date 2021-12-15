@@ -33,10 +33,10 @@ test: $(TST)
 	$<
 
 test-arxiv: arxiv
-	-rm -rf paper
-	tar -xf paper.tar.gz
-	cd paper && pdflatex paper.tex && pdflatex paper.tex
-	-rm -rf paper
+	-rm -rf $(NAM)
+	tar -xf $(TAR)
+	cd $(NAM) && pdflatex $(NAM).tex && pdflatex $(NAM).tex
+	-rm -rf $(NAM) $(TAR)
 
 $(PDF): $(TEX) $(BIB) $(SRC) $(STY)
 	latexmk $(TEX)
