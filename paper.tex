@@ -150,10 +150,15 @@ order.  However, the significant reduction of the number of
 floating\-/point multiplications, compared to the naive
 implementation, usually results in a shorter runtime.
 
-Several modern CPU architectures support instruction\-/level
-parallelism (ILP), which allows for the execution of multiple
-instructions at the same time.  To make use of ILP, one could use
-Estrin's scheme \cite{estrin} to rewrite the function as
+There are several different possibilities to reduce the runtime of
+Horner's method by rewriting the series expansion of $\ln(1+x)$ such
+that the more terms can be calculated in parallel, while the number
+floating\-/point operations is still kept small.  One possibility is
+to split the r.h.s.\ of Eq.~\eqref{eq:horner} into two distinct sums,
+one containing the even powers and the other containing the odd powers
+of $x$.  Both sums can then be calculated in parallel.  Another
+possibility is to rewrite r.h.s.\ of Eq.~\eqref{eq:taylor} using
+Estrin's scheme \cite{estrin},
 %
 \begin{align}
 \begin{split}
@@ -164,7 +169,7 @@ Estrin's scheme \cite{estrin} to rewrite the function as
 \end{align}
 %
 where $y=x^2$ and $z=y^2$.  This form requires 8 floating\-/point
-multiplications and 6 additions, i.e.\ more multiplications than
+multiplications and 6 additions, i.e.\ one more multiplication than
 Horner's scheme.  However, in Estrin's form several terms can be
 executed in parallel, leading to a potential speed-up if the cost of
 the additional multiplications is smaller than the gain by the
