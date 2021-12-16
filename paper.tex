@@ -122,8 +122,11 @@ in Eq.~\eqref{eq:taylor} could be implemented very naively as follows:
 %
 \lstinputlisting[language=C]{src/log1p_naive.c}
 %
-This naive implementation requires 26 floating\-/point multiplications
-and 6 floating\-/point additions.
+This naive implementation requires 27 floating\-/point multiplications
+and 6 floating\-/point additions.  Although all summands in this
+implementation can in principle be calculated in parallel, the cost of
+the many (redundant) floating\-/point multiplications is usually so
+high that this formulated is in total very time\-/inefficient.
 
 As is well known, the performante of this naive implementation can be
 improved by applying Horner's scheme, which reduces the number of
@@ -143,7 +146,9 @@ A C implementation using Horner's scheme could read
 %
 Note, that the formulation using Horner's scheme requires the
 evaluation of the floating\-/point operations in strictly sequential
-order.
+order.  However, the significant reduction of the number of
+floating\-/point multiplications, compared to the naive
+implementation, usually results in a shorter runtime.
 
 Several modern CPU architectures support instruction\-/level
 parallelism (ILP), which allows for the execution of multiple
