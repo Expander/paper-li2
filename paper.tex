@@ -354,7 +354,7 @@ compared on two different CPU architectures.  On each architecture the
 implentations are compiled with \texttt{g++} with optimization
 \texttt{-O2}.  The shown runtime denotes the total wall clock time for
 the calculation of $\Li(x)$ for $10^6$ uniformly distributed random
-values $x\in[-5,5]$.
+values $x\in[0,1/2]$.
 %
 \begin{table}[tb]
   \centering
@@ -363,16 +363,16 @@ values $x\in[-5,5]$.
     different compilers.}
   \begin{tabular}{lcc}
     \toprule
-    \multirow{2}{*}{Implementation} & i7-4700MQ & i7-5600U \\
+    \multirow{2}{*}{Implementation} & i7-5600U & ?? \\
     & \texttt{g++} 10.2.1 & \texttt{g++} 9.3.0 \\
     \midrule
-    this paper & $0.031$ & $0.026$ \\
-    Morris (DILOG 0011) \cite{morris} & $0.035$ & $0.026$ \\
-    Cephes \cite{cephes} & $0.044$ & $0.034$ \\
-    Algorithm 327 \cite{koelbigDilog} & $0.054$ & $0.035$ \\
-    Chebyshev \cite{luke} & $0.079$ & $0.060$ \\
-    Algorithm 490 \cite{ginsberg} & $0.125$ & $0.071$ \\
-    GSL \cite{gsl} & $0.330$ & $0.155$ \\
+    this paper                        & $0.0058$ & $??$ \\
+    Morris (DILOG 0011) \cite{morris} & $0.0085$ & $??$ \\
+    Cephes \cite{cephes}              & $0.0119$ & $??$ \\
+    Algorithm 327 \cite{koelbigDilog} & $0.0172$ & $??$ \\
+    Chebyshev \cite{luke}             & $0.0515$ & $??$ \\
+    Algorithm 490 \cite{ginsberg}     & $0.0576$ & $??$ \\
+    GSL \cite{gsl}                    & $0.0898$ & $??$ \\
     \bottomrule
   \end{tabular}
   \label{tab:runtime}
