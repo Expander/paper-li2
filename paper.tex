@@ -156,9 +156,27 @@ that the more terms can be calculated in parallel, while the number
 floating\-/point operations is still kept small.  One possibility is
 to split the r.h.s.\ of Eq.~\eqref{eq:horner} into two distinct sums,
 one containing the even powers and the other containing the odd powers
-of $x$.  Both sums can then be calculated in parallel.  Another
-possibility is to rewrite r.h.s.\ of Eq.~\eqref{eq:taylor} using
-Estrin's scheme \cite{estrin},
+of $x$,
+%
+\begin{align}
+\begin{split}
+  \ln(1+x) \approx{}& x \Bigg\{1 + y \Bigg[\frac{1}{3} + y
+  \Bigg(\frac{1}{5} + \frac{y}{7}\Bigg)\Bigg]\Bigg\} \\
+  &+ y\Bigg[-\frac{1}{2} + y\Bigg(-\frac{1}{4} - \frac{y}{6}\Bigg)\Bigg],
+\end{split}\label{eq:split}%
+\end{align}
+%
+where $y=x^2$.  This formulation requires 8 floating\-/point
+multiplications and 6 additions, i.e.\ one more multiplication than
+Horner's scheme.  However, in Eq.~\eqref{eq:split} both sums can then
+be calculated in parallel, leading to a potential speed-up if the cost
+of the additional multiplication is smaller than the gain by the
+parallel execution.  A C implementation could read:
+%
+\lstinputlisting[language=C]{src/log1p_split.c}
+%
+Another possibility is to rewrite the r.h.s.\ of Eq.~\eqref{eq:taylor}
+using Estrin's scheme \cite{estrin},
 %
 \begin{align}
 \begin{split}
@@ -168,13 +186,11 @@ Estrin's scheme \cite{estrin},
 \end{split}\label{eq:estrin}%
 \end{align}
 %
-where $y=x^2$ and $z=y^2$.  This form requires 8 floating\-/point
-multiplications and 6 additions, i.e.\ one more multiplication than
-Horner's scheme.  However, in Estrin's form several terms can be
-executed in parallel, leading to a potential speed-up if the cost of
-the additional multiplications is smaller than the gain by the
-parallel execution.  A C implementation using Estrin's scheme could
-read:
+where $y=x^2$ and $z=y^2$.  This form also requires 8 floating\-/point
+multiplications and 6 additions, as in Eq.~\eqref{eq:split}.  However,
+in Estrin's form more terms can be executed in parallel, leading to a
+potential further speed-up.  A C implementation using Estrin's scheme
+could read:
 %
 \lstinputlisting[language=C]{src/log1p_estrin.c}
 

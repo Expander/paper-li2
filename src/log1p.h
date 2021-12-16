@@ -1,5 +1,6 @@
 double log1p_naive(double);
 double log1p_horner(double);
+double log1p_split(double);
 double log1p_estrin(double);
 double log1p_pade(double);
 double log1p_mixed(double);
@@ -12,6 +13,7 @@ struct Fn {
 const struct Fn functions[] = {
    { log1p_naive , "log1p_naive"  },
    { log1p_horner, "log1p_horner" },
+   { log1p_split , "log1p_split"  },
    { log1p_estrin, "log1p_estrin" },
    { log1p_pade  , "log1p_pade"   },
    { log1p_mixed , "log1p_mixed"  },
