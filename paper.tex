@@ -201,29 +201,22 @@ approximant of $\ln(1+x)$ at the same order as Eq.~\eqref{eq:taylor}
 reads
 %
 \begin{align}
-  \ln(1+x) \approx x
+  \ln(1+x) &\approx x
   \frac{\frac{320 x^3}{40143}+\frac{44320 x^2}{120429}+\frac{51064
     x}{40143}+1}{\frac{5120 x^3}{40143}+\frac{12320 x^2}{13381}+\frac{23712
-    x}{13381}+1}.
+    x}{13381}+1}
   \label{eq:pade}
-\end{align}
-%
-A naive C implementation of Eq.~\eqref{eq:pade} could read:
-%
-\lstinputlisting[language=C]{src/log1p_pade.c}
-%
-The numerator and the denominator of Eq.~\eqref{eq:pade} can be
-re-written using Estrin's scheme, allowing for further ILP:
-%
-\begin{align}
-  \ln(1+x) \approx x
+  \\
+  &= x
   \frac{\left(\frac{320 x}{40143}+\frac{44320}{120429}\right)y+\frac{51064
     x}{40143}+1}{\left(\frac{5120 x}{40143}+\frac{12320}{13381}\right)y+\frac{23712
     x}{13381}+1},
   \label{eq:mixed}
 \end{align}
 %
-where $y=x^2$.  A C implementation could read:
+where $y=x^2$.  In Eq.~\eqref{eq:mixed} the numerator and the
+denominator have been re-written using Estrin's scheme, allowing for
+further ILP.  A C implementation of Eq.~\eqref{eq:mixed} could read:
 %
 \lstinputlisting[language=C]{src/log1p_mixed.c}
 %
