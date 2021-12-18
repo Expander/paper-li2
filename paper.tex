@@ -317,6 +317,9 @@ the \texttt{MiniMaxApproximation} from Wolfram/Mathematica
 \end{align}
 %
 The coefficients $p_k$ and $q_k$ are listed in \tabref{tab:coeffs}.
+The approximant on the r.h.s.\ of Eq.~\eqref{eq:minimax} has a maximum
+relative error of around $5\cdot 10^{-17}$, suited for an evaluation
+of $\Li(x)$ with double precision.
 %
 \begin{table}[t]
   \centering
@@ -341,6 +344,10 @@ The coefficients $p_k$ and $q_k$ are listed in \tabref{tab:coeffs}.
   \end{tabular}
   \label{tab:coeffs}
 \end{table}
+%
+Note that the approximant on the r.h.s.\ of Eq.~\eqref{eq:minimax} is
+very similar to the results presented in Ref.~\cite{morris} (DILOG
+0011), although with slightly different coefficients.
 
 In \tabref{tab:runtime} the runtime of different C implementations is
 compared on two different CPU architectures.  On each architecture the
