@@ -347,7 +347,18 @@ of $\Li(x)$ with double precision.
 %
 Note that the approximant on the r.h.s.\ of Eq.~\eqref{eq:minimax} is
 very similar to the results presented in Ref.~\cite{morris} (DILOG
-0011), although with slightly different coefficients.
+0011), although with slightly different coefficients.  In oder to
+allow for the use of ILP for the evaluation of the numerator and the
+denominator we use Estrin's scheme,
+%
+\begin{align}
+  \Li(x) &\approx x\frac{P(x)}{Q(x)}, \qquad 0\leq x \leq \frac{1}{2}, \label{eq:final}\\
+  P(x) &= p_0 + x p_1 + y (p_2 + x p_3) + z (p_4 + x p_5), \\
+  Q(x) &= q_0 + x q_1 + y (q_2 + x q_3) + z (q_4 + x q_5 + y q_6),
+\end{align}
+%
+with $y=x^2$ and $z=y^2$.  A C implementation of Eq.~\eqref{eq:final}
+can be found in the appendix.
 
 In \tabref{tab:runtime} the runtime of different C implementations is
 compared on two different CPU architectures.  On each architecture the
@@ -368,7 +379,7 @@ but not to the transformation onto the interval $[0,1/2]$.
     \multirow{2}{*}{Implementation} & i7-4700MQ & i7-5600U \\
     & \texttt{g++} 9.3.0 & \texttt{g++} 10.2.1 \\
     \midrule
-    this paper                        & $0.0076$ & $0.0058$ \\
+    Eq.~\eqref{eq:final} (this paper) & $0.0076$ & $0.0058$ \\
     Morris (DILOG 0011) \cite{morris} & $0.0115$ & $0.0085$ \\
     Cephes \cite{cephes}              & $0.0136$ & $0.0119$ \\
     Algorithm 327 \cite{koelbigDilog} & $0.0229$ & $0.0172$ \\
@@ -380,16 +391,27 @@ but not to the transformation onto the interval $[0,1/2]$.
   \label{tab:runtime}
 \end{table}
 %
-We find that the implementation presented in this paper and the
-approach presented in \cite{morris} are fastest among the ones shown
-in the table.  The next-to fastest implementation is provided by
-Cephes, which is only $\sim 20\%$ slower.  The short runtime of Cephes
-stems from the fact that Cephes also uses a rational function
-approximation, where the numerator and the denominator can be
-evaluated in parallel.  However, Cephes evaluates the polynomials in
-the numerator and denominator using Horner's scheme, which is purely
-sequential.  Furthermore, for $x>1$ Cephes calculates $\ln(x)$ twice,
-which leads to a further slowdown.
+We find that the implementation presented in Eq.~\eqref{eq:final} in
+this paper and the approach presented in Ref.~\cite{morris} (DILOG
+0011) are fastest among the ones shown in the table.  Both approaches
+use a rational function approximant with the same number of terms.
+However, the approximant from Ref.~\cite{morris} has been implemented
+(for comparison) to use Horner's scheme to evaluate the numerator and
+the denominator.  Thus, the runtime difference of $\sim 30\%$ between
+these two stems only from the fact that the implementation presented
+in this paper uses Estrin's scheme to evaluate the numerator and the
+denominator and as such can make use of ILP, while in the
+implementation of Ref.~\cite{morris} the numerator and the denominator
+must be evaluated sequentially.
+
+The third fastest implementation is provided by Cephes, which is by a
+factor two slower than the implementation in the appendix.  This
+longer runtime has several reasons: For one, Cephes uses a rational
+function approximation with more terms in the numerator and
+denominator.  Furthermore, Cephes evaluates the numerator and
+denominator polynomials using Horner's scheme, which is purely
+sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$ twice, which
+  leads to a further increased runtime.}
 
 \section{Conclusions}
 
