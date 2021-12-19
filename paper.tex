@@ -376,7 +376,7 @@ runtime denotes the total wall clock time for the calculation of
 $\Li(x)$ for $10^6$ uniformly distributed random values $x\in[0,1/2]$.
 The choice of this interval ensures that the measurement is only
 sensitive to the formulation of the approximant, but not to the
-transformation onto the interval $[0,1/2]$.
+transformation onto the interval $[0,1/2]$.%
 %
 \begin{table}[tb]
   \centering
@@ -398,15 +398,15 @@ transformation onto the interval $[0,1/2]$.
     \bottomrule
   \end{tabular}
   \label{tab:runtime}
-\end{table}
-%
-We find that the implementation presented in Eq.~\eqref{eq:final} in
-this paper and the approach presented in Ref.~\cite{morris} (DILOG
-0011) are fastest among the ones shown in the table.  Both approaches
-use a rational function approximant with the same number of terms.
-However, the approximant from Ref.~\cite{morris} has been implemented
-(for comparison) to use Horner's scheme to evaluate the numerator and
-the denominator.  Thus, the runtime difference of $\sim 30\%$ between
+\end{table}%
+
+We find that the implementation presented in this paper and the
+approach presented in Ref.~\cite{morris} (DILOG 0011) are fastest
+among the ones shown in the table.  Both approaches use a rational
+function approximant with the same number of terms.  However, the
+approximant from Ref.~\cite{morris} has been implemented (for
+comparison) to use Horner's scheme to evaluate the numerator and the
+denominator.  Thus, the runtime difference of $\sim 30\%$ between
 these two stems only from the fact that the implementation presented
 in this paper uses Estrin's scheme to evaluate the numerator and the
 denominator and as such can make use of ILP, while in the
