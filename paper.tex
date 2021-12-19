@@ -352,22 +352,31 @@ allow for the use of ILP for the evaluation of the numerator and the
 denominator we use Estrin's scheme,
 %
 \begin{align}
-  \Li(x) &\approx x\frac{P(x)}{Q(x)}, \qquad 0\leq x \leq \frac{1}{2}, \label{eq:final}\\
+  \Li(x) &\approx x\frac{P(x)}{Q(x)}, \qquad 0\leq x \leq \frac{1}{2},
+  \label{eq:final}
+\end{align}
+%
+with
+%
+\begin{align}
   P(x) &= p_0 + x p_1 + y (p_2 + x p_3) + z (p_4 + x p_5), \\
   Q(x) &= q_0 + x q_1 + y (q_2 + x q_3) + z (q_4 + x q_5 + y q_6),
 \end{align}
 %
-with $y=x^2$ and $z=y^2$.  A C implementation of Eq.~\eqref{eq:final}
+where $y=x^2$ and $z=y^2$.  A C implementation of Eq.~\eqref{eq:final}
 can be found in the appendix.
 
+\section{Runtime comparison}
+
 In \tabref{tab:runtime} the runtime of different C implementations is
-compared on two different CPU architectures.  On each architecture the
-implentations are compiled with \texttt{g++} with optimization
-\texttt{-O2}.  The shown runtime denotes the total wall clock time for
-the calculation of $\Li(x)$ for $10^6$ uniformly distributed random
-values $x\in[0,1/2]$.  The choice of this interval ensures that the
-measurement is only sensitive to the formulation of the approximant,
-but not to the transformation onto the interval $[0,1/2]$.
+compared to the implementation given in the appednix on two different
+CPU architectures.  On each architecture the implentations are
+compiled with \texttt{g++} with optimization \texttt{-O2}.  The shown
+runtime denotes the total wall clock time for the calculation of
+$\Li(x)$ for $10^6$ uniformly distributed random values $x\in[0,1/2]$.
+The choice of this interval ensures that the measurement is only
+sensitive to the formulation of the approximant, but not to the
+transformation onto the interval $[0,1/2]$.
 %
 \begin{table}[tb]
   \centering
