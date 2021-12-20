@@ -116,9 +116,9 @@ Taylor expansion
 around $x=0$ for $x\in(-1,1]$.  In Eq.~\eqref{eq:taylor} terms of
 $O(x^8)$ and beyond have been omitted for brevity.  In the following
 we will briefly show various possible implementations of this function
-and discuss the performance of the different implementations.  For
-brevity we will restrict ourselves to $x\in(-1,1]$.  In C the function
-in Eq.~\eqref{eq:taylor} could be implemented very naively as follows:
+and discuss their performance implications.  For brevity we will
+restrict ourselves to $x\in(-1,1]$.  In C the function in
+Eq.~\eqref{eq:taylor} could be implemented very naively as follows:
 %
 \lstinputlisting[language=C]{src/log1p_naive.c}
 %
@@ -126,7 +126,7 @@ This naive implementation requires 27 floating\-/point multiplications
 and 6 floating\-/point additions.  Although all summands in this
 implementation can in principle be calculated in parallel, the cost of
 the many (redundant) floating\-/point multiplications is usually so
-high that this formulated is in total very time\-/inefficient.
+high that this formulation is in total very time\-/inefficient.
 
 As is well known, the performance of this naive implementation can be
 improved by applying Horner's scheme, which reduces the number of
@@ -220,14 +220,14 @@ further ILP.  A C implementation of Eq.~\eqref{eq:mixed} could read:
 %
 \lstinputlisting[language=C]{src/log1p_mixed.c}
 %
-Note that the value $y=x^2$ can be re-used in the calculation of both
-the numerator and in the denominator.  This ``mixed'' implementation
-requires 8 floating\-/point multiplications, 1 floating\-/point
-division and 6 additions.  The rational function approximation
-\eqref{eq:mixed} may be faster for long numerator/denominator
-polynomials, where the cost of the floating\-/point division is
-smaller than the gain by the parallel execution of the terms in the
-numerator and denominator.
+Note, that the value $y=x^2$ can be re-used in the calculation of both
+the numerator and in the denominator.  A computation of $y^2$ is not
+necessary.  This ``mixed'' implementation requires 8 floating\-/point
+multiplications, 1 floating\-/point division and 6 additions.  The
+rational function approximation in Eq.~\eqref{eq:mixed} may be faster
+for long numerator/denominator polynomials, where the cost of the
+floating\-/point division is smaller than the gain by the parallel
+execution of the terms in the numerator and denominator.
 
 
 \section{ILP-aware approximation of the real dilogarithm}
@@ -268,11 +268,11 @@ terms of Chebyshev polynomials of the first kind $T_n(x)$ is given in
 which is used for example in the ROOT program library \cite{root}.
 The r.h.s.\ of Eqs.~\eqref{eq:series}--\eqref{eq:cheby} can be summed,
 for example, using Horner's scheme or Clenshaw's algorithm
-\cite{clenshaw}.  These summation techniques are, however, purely
-sequential and thus do not make use of ILP.  In the following an
-approximation of the real dilogarithm is presented, which makes use of
-ILP, using a rational function approximation in combination with
-Estrin's scheme, similar to the approach used in
+\cite{clenshaw}, respectively.  These summation techniques are,
+however, purely sequential and thus do not make use of ILP.  In the
+following an approximation of the real dilogarithm is presented, which
+makes use of ILP, using a rational function approximation in
+combination with Estrin's scheme, similar to the approach used in
 Eq.~\eqref{eq:mixed}.
 
 We define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$ as
@@ -315,8 +315,9 @@ the \texttt{MiniMaxApproximation} from Wolfram/Mathematica
 %
 The coefficients $p_k$ and $q_k$ are listed in \tabref{tab:coeffs}.
 The approximant on the r.h.s.\ of Eq.~\eqref{eq:minimax} has a maximum
-relative error of around $5\cdot 10^{-17}$, suited for an evaluation
-of $\Li(x)$ with double precision.
+relative error of around $5\cdot 10^{-17}$.  This error is small
+enough so that the approximant Eq.~\eqref{eq:minimax} can be used for
+the evaluation of $\Li(x)$ with double precision.
 %
 \begin{table}[t]
   \centering
@@ -343,10 +344,10 @@ of $\Li(x)$ with double precision.
 \end{table}
 %
 Note that the approximant on the r.h.s.\ of Eq.~\eqref{eq:minimax} is
-very similar to the results presented in Ref.~\cite{morris} (DILOG
+very similar to the approximant presented in Ref.~\cite{morris} (DILOG
 0011), although with slightly different coefficients.  In order to
 allow for the use of ILP for the evaluation of the numerator and the
-denominator we use Estrin's scheme,
+denominator we use Estrin's scheme and write
 %
 \begin{align}
   \Li(x) &\approx x\frac{P(x)}{Q(x)}, & &0\leq x \leq \frac{1}{2},
@@ -356,8 +357,8 @@ denominator we use Estrin's scheme,
 with
 %
 \begin{align}
-  P(x) &= p_0 + x p_1 + y (p_2 + x p_3) + z (p_4 + x p_5), \\
-  Q(x) &= q_0 + x q_1 + y (q_2 + x q_3) + z (q_4 + x q_5 + y q_6),
+  P(x) &= p_0 + p_1 x + (p_2 + p_3 x) y + (p_4 + p_5 x) z, \\
+  Q(x) &= q_0 + q_1 x + (q_2 + q_3 x) y + (q_4 + q_5 x + q_6 y) z,
 \end{align}
 %
 where $y=x^2$ and $z=y^2$.  A C implementation of Eq.~\eqref{eq:final}
@@ -365,15 +366,16 @@ can be found in the appendix.
 
 \section{Run\-/time comparison}
 
-In \tabref{tab:runtime} the run\-/time of different C implementations is
-compared to the implementation given in the appendix on two different
-CPU architectures.  On each architecture the implementations are
-compiled with \texttt{g++} with optimization \texttt{-O2}.  The shown
-run\-/time denotes the total wall clock time for the calculation of
-$\Li(x)$ for $10^6$ uniformly distributed random values $x\in[0,1/2]$.
-The choice of this interval ensures that the measurement is only
-sensitive to the formulation of the approximant, but not to the
-transformation onto the interval $[0,1/2]$.%
+In \tabref{tab:runtime} the run\-/time of different C implementations
+for the real dilogarithm is compared to the implementation given in
+the appendix on two different CPU architectures.  On each architecture
+the implementations are compiled with \texttt{g++} with optimization
+\texttt{-O2}.  The shown run\-/time denotes the total wall clock time
+for the calculation of $\Li(x)$ for $10^6$ uniformly distributed
+random values $x\in[0,1/2]$.  The choice of this interval ensures that
+the measurement is only sensitive to the formulation of the
+approximant, but not to the transformation onto the interval
+$[0,1/2]$.%
 %
 \begin{table}[tb]
   \centering
@@ -404,11 +406,11 @@ function approximant with the same number of terms.  However, the
 approximant from Ref.~\cite{morris} has been implemented (for
 comparison) to use Horner's scheme to evaluate the numerator and the
 denominator.  Thus, the run\-/time difference of $\sim 30\%$ between
-the two stems only from the fact that the implementation presented
-in this paper uses Estrin's scheme to evaluate the numerator and the
+the two stems only from the fact that the implementation presented in
+this paper uses Estrin's scheme to evaluate the numerator and the
 denominator and as such can make use of ILP, while in the
 implementation of Ref.~\cite{morris} the numerator and the denominator
-must be evaluated sequentially.
+are evaluated sequentially.
 
 The third fastest implementation is provided by Cephes \cite{cephes},
 which implements a rational function approximation for Spence's
@@ -426,11 +428,12 @@ Algorithm 327 \cite{koelbigDilog}, Algorithm 490 \cite{ginsberg} and
 the implementation found in the GNU Scientific Library (GSL)
 \cite{gsl} use series expansions, which are summed using Horner's
 scheme.  These algorithms thus do not make use of ILP, which is one
-reason for their longer run\-/time.  Furthermore, Algorithm 490 and most
-series expansions in the GSL use floating\-/point divisions inside
-loops, which may be another reason for the increased run\-/time.
+reason for their longer run\-/time.  Furthermore, Algorithm 490 and
+most series expansions in the GSL use expensive floating\-/point
+divisions inside loops, which may be another reason for the increased
+run\-/time.
 
-A representation in terms of Chebyshev polynomials \cite{luke} is
+The representation in terms of Chebyshev polynomials \cite{luke} is
 implemented in the ROOT program library \cite{root}.  In this
 implementation the polynomials are summed using Clenshaw's algorithm,
 which is also purely sequential and slightly more complex than
@@ -446,7 +449,7 @@ the use of instruction\-/level (ILP) parallelism.  We found that a
 rational minimax approximant in combination with Estrin's scheme to
 evaluate the numerator/denominator polynomials provides both a
 sufficient numerical precision and a high degree of ILP, potentially
-leading to a reduced run\-/time.  An approximant and a corresponding C
+leading to a reduced run\-/time.  A corresponding approximant and a C
 implementation have been proposed and compared to several existing
 implementations w.r.t.\ their run\-/time.  The C implementation of the
 presented approximant can be found in the appendix.  C++ and FORTRAN
