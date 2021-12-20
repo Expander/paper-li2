@@ -14,7 +14,7 @@
 \usepackage{multirow}
 \setkomafont{disposition}{\bfseries}
 
-\newcommand{\mytitle}{Comparisons of methods for the calculation of the real dilogarithm regarding instruction-level parallelism}
+\newcommand{\mytitle}{Comparison of methods for the calculation of the real dilogarithm regarding instruction-level parallelism}
 \newcommand{\myauthor}{Alexander Voigt}
 \newcommand{\Li}{\operatorname{Li}_2}
 \newcommand{\secref}[1]{Section~\ref{#1}}
@@ -441,10 +441,15 @@ approximants discussed above.
 
 \section{Conclusions}
 
-C, C++ and FORTRAN implementations of the presented algorithm can be
-found in the Polylogarithm library \cite{polylogarithm}.
-Implementations in Julia and Rust can be found in \cite{PolyLog.jl}
-and \cite{polylog}, respectively.
+In this paper different approaches for the numerical calculation of
+the real dilogarithm have been compared w.r.t.\ their potential for
+the use of instruction\-/level parallelism.  A particular
+implementation of a rational minimax approximant has been proposed and
+compared to several existing implementations w.r.t.\ runtime.  C, C++
+and FORTRAN implementations of the presented algorithm can be found in
+the Polylogarithm library \cite{polylogarithm}.  Implementations in
+Julia and Rust can be found in \cite{PolyLog.jl} and \cite{polylog},
+respectively.
 
 \appendix
 
