@@ -438,25 +438,27 @@ Horner's scheme.  This is a reason why the implementation in
 \cite{root} has a larger runtime than the rational function
 approximants discussed above.
 
-\section{Conclusions}
+\section{Summary}
 
 In this paper different approaches for the numerical calculation of
 the real dilogarithm have been compared w.r.t.\ their potential for
-the use of instruction\-/level parallelism.  A particular
-implementation of a rational minimax approximant has been proposed and
-compared to several existing implementations w.r.t.\ runtime.  A C
-implementations of the presented algorithm can be found in the
-appendix.  C++ and FORTRAN implementations can be found in the
-Polylogarithm library \cite{polylogarithm}.  Implementations in Julia
-and Rust can be found in \cite{PolyLog.jl} and \cite{polylog},
-respectively.
+the use of instruction\-/level (ILP) parallelism.  We found that a
+rational minimax approximant in combination with Estrin's scheme to
+evaluate the numerator/denominator polynomials provides both a
+sufficient numerical precision and a high degree of ILP, potentially
+leading to a reduced runtime.  A particular implementation of a
+rational minimax approximant has been proposed and compared to several
+existing implementations w.r.t.\ runtime.  A C implementations of the
+presented algorithm can be found in the appendix.  C++ and FORTRAN
+implementations can be found in the Polylogarithm library
+\cite{polylogarithm}.  Implementations in Julia and Rust can be found
+in \cite{PolyLog.jl} and \cite{polylog}, respectively.
 
 \appendix
 
 \section{Implementation of the real dilogarithm}
 
 \lstinputlisting[language=C]{anc/Li2.c}
-
 
 \bibliographystyle{ieeetr}
 \bibliography{paper}
