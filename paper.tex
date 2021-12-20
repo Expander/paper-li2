@@ -238,7 +238,7 @@ is presented, which allows for the parallel execution of different
 floating\-/point operations.  The real dilogarithm is defined as
 %
 \begin{align}
-  \Li(x) &= -\int_0^x \frac{\ln(1-t)}{t}dt, &
+  \Li(x) &= -\int_0^x \frac{\ln(1-t)}{t} \, \textnormal{d}t, &
   &x<1.
 \end{align}
 %
@@ -349,7 +349,7 @@ allow for the use of ILP for the evaluation of the numerator and the
 denominator we use Estrin's scheme,
 %
 \begin{align}
-  \Li(x) &\approx x\frac{P(x)}{Q(x)}, \qquad 0\leq x \leq \frac{1}{2},
+  \Li(x) &\approx x\frac{P(x)}{Q(x)}, & &0\leq x \leq \frac{1}{2},
   \label{eq:final}
 \end{align}
 %
