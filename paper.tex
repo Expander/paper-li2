@@ -423,6 +423,16 @@ sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$ twice, which
   leads to a further increased runtime when a benchmark interval with
   $x>1$ is chosen.}
 
+Algorithm 327 \cite{koelbigDilog}, Algorithm 490 \cite{ginsberg} and
+the implementation found in the Gnu Scientific Library (GSL)
+\cite{gsl} use series expansions, which are summed using Horner's
+scheme.  These algorithms thus do not make use of ILP, which is one
+reason for their longer runtime.  Furthermore, Algorithm 490 and most
+series expansions in the GSL use floating\-/point divisions inside
+loops, which may be another reason for the increased runtime.
+
+% Chebyshev \cite{luke,root}
+
 \section{Conclusions}
 
 C, C++ and FORTRAN implementations of the presented algorithm can be
