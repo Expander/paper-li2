@@ -431,7 +431,13 @@ reason for their longer runtime.  Furthermore, Algorithm 490 and most
 series expansions in the GSL use floating\-/point divisions inside
 loops, which may be another reason for the increased runtime.
 
-% Chebyshev \cite{luke,root}
+A representation in terms of Chebyshev polynomials \cite{luke} is
+implemented in the ROOT program library \cite{root}.  In this
+implementation the polynomials are summed using Clenshaw's algorithm,
+which is also purely sequencial and slightly more complex than
+Horner's scheme.  This is a reason why the implementation in
+\cite{root} has a larger runtime than the rational function
+approximants discussed above.
 
 \section{Conclusions}
 
