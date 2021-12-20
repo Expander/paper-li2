@@ -87,12 +87,12 @@ use formulations for the approximation of the dilogarithm with a
 strictly sequential execution of floating\-/point operations.  The
 development of modern CPUs with support for instruction\-/level
 parallelism (ILP) opens the opportunity for a further reduction of the
-runtime of the calculation of the dilogarithm.  To make use of ILP,
+run\-/time of the calculation of the dilogarithm.  To make use of ILP,
 the algorithm to calculate the dilogarithm must be formulated
 appropriately in order to allow for the parallel execution of multiple
 floating\-/point operations.  In this paper a method for the
 calculation of the real dilogarithm $\Li$ is presented, which makes
-use of ILP, potentially resulting in a reduced runtime compared to
+use of ILP, potentially resulting in a reduced run\-/time compared to
 many algorithms presented so far.
 
 This paper is organized as follows: In \secref{sec:toymodel} different
@@ -148,9 +148,9 @@ Note, that the formulation using Horner's scheme requires the
 evaluation of the floating\-/point operations in strictly sequential
 order.  However, the significant reduction of the number of
 floating\-/point multiplications, compared to the naive
-implementation, usually results in a shorter runtime.
+implementation, usually results in a shorter run\-/time.
 
-There are several different possibilities to reduce the runtime of
+There are several different possibilities to reduce the run\-/time of
 Horner's method by rewriting the series expansion of $\ln(1+x)$ such
 that more terms can be calculated in parallel, while the number
 floating\-/point operations is still kept small.  One possibility is
@@ -363,13 +363,13 @@ with
 where $y=x^2$ and $z=y^2$.  A C implementation of Eq.~\eqref{eq:final}
 can be found in the appendix.
 
-\section{Runtime comparison}
+\section{Run\-/time comparison}
 
-In \tabref{tab:runtime} the runtime of different C implementations is
+In \tabref{tab:runtime} the run\-/time of different C implementations is
 compared to the implementation given in the appednix on two different
 CPU architectures.  On each architecture the implentations are
 compiled with \texttt{g++} with optimization \texttt{-O2}.  The shown
-runtime denotes the total wall clock time for the calculation of
+run\-/time denotes the total wall clock time for the calculation of
 $\Li(x)$ for $10^6$ uniformly distributed random values $x\in[0,1/2]$.
 The choice of this interval ensures that the measurement is only
 sensitive to the formulation of the approximant, but not to the
@@ -377,7 +377,7 @@ transformation onto the interval $[0,1/2]$.%
 %
 \begin{table}[tb]
   \centering
-  \caption{Runtime in seconds for the calculation of $\Li(x)$ for
+  \caption{Run\-/time in seconds for the calculation of $\Li(x)$ for
     different implementations on different CPU architectures with
     different compilers.}
   \begin{tabular}{lcc}
@@ -403,7 +403,7 @@ among the ones shown in the table.  Both approaches use a rational
 function approximant with the same number of terms.  However, the
 approximant from Ref.~\cite{morris} has been implemented (for
 comparison) to use Horner's scheme to evaluate the numerator and the
-denominator.  Thus, the runtime difference of $\sim 30\%$ between
+denominator.  Thus, the run\-/time difference of $\sim 30\%$ between
 the two stems only from the fact that the implementation presented
 in this paper uses Estrin's scheme to evaluate the numerator and the
 denominator and as such can make use of ILP, while in the
@@ -414,28 +414,28 @@ The third fastest implementation is provided by Cephes \cite{cephes},
 which implements a rational function approximation for Spence's
 function $\operatorname{Sp}(x)=\Li(1-x)$.  The implementation provided
 by Cephes is by a factor two slower than the implementation prestend
-in this paper.  This longer runtime has several reasons: For one,
+in this paper.  This longer run\-/time has several reasons: For one,
 Cephes uses a rational function approximation with more terms in the
 numerator and denominator.  Furthermore, Cephes evaluates the
 numerator and denominator polynomials using Horner's scheme, which is
 purely sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$
-  twice, which leads to a further increased runtime when a benchmark
+  twice, which leads to a further increased run\-/time when a benchmark
   interval with $x>1$ is chosen.}
 
 Algorithm 327 \cite{koelbigDilog}, Algorithm 490 \cite{ginsberg} and
 the implementation found in the GNU Scientific Library (GSL)
 \cite{gsl} use series expansions, which are summed using Horner's
 scheme.  These algorithms thus do not make use of ILP, which is one
-reason for their longer runtime.  Furthermore, Algorithm 490 and most
+reason for their longer run\-/time.  Furthermore, Algorithm 490 and most
 series expansions in the GSL use floating\-/point divisions inside
-loops, which may be another reason for the increased runtime.
+loops, which may be another reason for the increased run\-/time.
 
 A representation in terms of Chebyshev polynomials \cite{luke} is
 implemented in the ROOT program library \cite{root}.  In this
 implementation the polynomials are summed using Clenshaw's algorithm,
 which is also purely sequencial and slightly more complex than
 Horner's scheme.  This is a reason why the implementation in
-\cite{root} has a larger runtime than the rational function
+\cite{root} has a larger run\-/time than the rational function
 approximants discussed above.
 
 \section{Summary}
@@ -446,9 +446,9 @@ the use of instruction\-/level (ILP) parallelism.  We found that a
 rational minimax approximant in combination with Estrin's scheme to
 evaluate the numerator/denominator polynomials provides both a
 sufficient numerical precision and a high degree of ILP, potentially
-leading to a reduced runtime.  An approximant and a corresponding C
+leading to a reduced run\-/time.  An approximant and a corresponding C
 implementation have been proposed and compared to several existing
-implementations w.r.t.\ their runtime.  The C implementation of the
+implementations w.r.t.\ their run\-/time.  The C implementation of the
 presented approximant can be found in the appendix.  C++ and FORTRAN
 implementations can be found in the Polylogarithm library
 \cite{polylogarithm}.  Implementations in Julia and Rust can be found
