@@ -273,10 +273,7 @@ sequential and thus do not make use of ILP.  In the following an
 approximation of the real dilogarithm is presented, which makes use of
 ILP, using a rational function approximation in combination with
 Estrin's scheme, similar to the approach used in
-Eq.~\eqref{eq:mixed}.%
-\footnote{The Cephes library \cite{cephes} implements an equivalent
-  rational function approximation for Spence's function
-  $\operatorname{Sp}(x)=\Li(1-x)$.}
+Eq.~\eqref{eq:mixed}.
 
 We define the real dilogarithm $\Li(x)$ for all $x\in\mathbb{R}$ as
 the real part of its complex continuation.  The real dilogarithm can
@@ -413,15 +410,17 @@ denominator and as such can make use of ILP, while in the
 implementation of Ref.~\cite{morris} the numerator and the denominator
 must be evaluated sequentially.
 
-The third fastest implementation is provided by Cephes, which is by a
-factor two slower than the implementation prestend in this paper.
-This longer runtime has several reasons: For one, Cephes uses a
-rational function approximation with more terms in the numerator and
-denominator.  Furthermore, Cephes evaluates the numerator and
-denominator polynomials using Horner's scheme, which is purely
-sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$ twice, which
-  leads to a further increased runtime when a benchmark interval with
-  $x>1$ is chosen.}
+The third fastest implementation is provided by Cephes \cite{cephes},
+which implements a rational function approximation for Spence's
+function $\operatorname{Sp}(x)=\Li(1-x)$.  The implementation provided
+by Cephes is by a factor two slower than the implementation prestend
+in this paper.  This longer runtime has several reasons: For one,
+Cephes uses a rational function approximation with more terms in the
+numerator and denominator.  Furthermore, Cephes evaluates the
+numerator and denominator polynomials using Horner's scheme, which is
+purely sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$
+  twice, which leads to a further increased runtime when a benchmark
+  interval with $x>1$ is chosen.}
 
 Algorithm 327 \cite{koelbigDilog}, Algorithm 490 \cite{ginsberg} and
 the implementation found in the GNU Scientific Library (GSL)
