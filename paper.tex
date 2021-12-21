@@ -379,8 +379,10 @@ for the calculation of $\Li(x)$ for $10^6$ uniformly distributed
 random values $x\in[0,1/2]$.  The choice of this interval ensures that
 the measurement is only sensitive to the formulation of the
 approximant, but not to the transformation onto the interval
-$[0,1/2]$.%
-%
+$[0,1/2]$.  Note that in applications where
+$x\in\mathbb{R}\backslash [0,1/2]$, the transformation onto the
+interval $[0,1/2]$ can have a significant impact on the run\-/time.
+
 \begin{table}[tb]
   \centering
   \caption{Run\-/time in seconds for the calculation of $\Li(x)$ for
