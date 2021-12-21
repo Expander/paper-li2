@@ -1,6 +1,6 @@
 \documentclass[10pt,DIV16,twocolumn,numbers=noenddot]{scrartcl}
 
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb}
@@ -12,6 +12,9 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{multirow}
+\usepackage[sorting=none]{biblatex}
+\addbibresource{paper.bib}
+
 \setkomafont{disposition}{\bfseries}
 
 \newcommand{\mytitle}{Comparison of methods for the calculation of the real dilogarithm regarding instruction-level parallelism}
@@ -464,7 +467,6 @@ in \cite{PolyLog.jl} and \cite{polylog}, respectively.
 
 \lstinputlisting[language=C]{anc/Li2.c}
 
-\bibliographystyle{ieeetr}
-\bibliography{paper}
+\printbibliography
 
 \end{document}

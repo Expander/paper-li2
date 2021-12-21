@@ -1,6 +1,7 @@
 *~
 *.a
 *.aux
+*.bcf
 *.bbl
 *.blg
 *.fdb_latexmk
@@ -10,3 +11,4 @@
 *.out
 *.pdf
 *.x
+*.xml
