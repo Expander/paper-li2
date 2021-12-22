@@ -12,7 +12,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{multirow}
-\usepackage[sorting=none,citestyle=numeric-comp]{biblatex}
+\usepackage[sorting=none,citestyle=numeric-comp,eprint=false,isbn=false]{biblatex}
 \addbibresource{paper.bib}
 
 \setkomafont{disposition}{\bfseries}
@@ -133,9 +133,9 @@ the many (redundant) floating\-/point multiplications is usually so
 high that this formulation is in total very time\-/inefficient.
 
 As is well known, the performance of this naive implementation can be
-improved by applying Horner's scheme, which reduces the number of
-expensive floating\-/point multiplications to 7 and requires 6
-additions:
+improved by applying Horner's scheme \cite{horner}, which reduces the
+number of expensive floating\-/point multiplications to 7 and requires
+6 additions:
 %
 \begin{align}
 \begin{split}
