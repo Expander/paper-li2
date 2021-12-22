@@ -12,7 +12,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{multirow}
-\usepackage[sorting=none]{biblatex}
+\usepackage[sorting=none,citestyle=numeric-comp]{biblatex}
 \addbibresource{paper.bib}
 
 \setkomafont{disposition}{\bfseries}
@@ -81,7 +81,7 @@ beyond the Standard Model of particle physics with large parameter
 spaces require the numerical evaluation of the dilogarithm (and other
 functions) billions of times.  Such investigations thus require a fast
 evaluation of the dilogarithm.  In the past many time-efficient
-algorithms have been invented (see e.g.\
+algorithms have been developed (see e.g.\
 \cite{koelbigDilog,ginsberg,morris,luke}) and many are implemented,
 for example, in general-purpose physics and mathematics program
 libraries \cite{root,gsl,cephes}.
@@ -93,11 +93,11 @@ the development of modern CPUs with support for instruction\-/level
 parallelism (ILP) opens the opportunity for a further reduction of the
 run\-/time of the calculation of the dilogarithm.  To make use of ILP,
 the algorithm to calculate the dilogarithm must be formulated
-appropriately in order to allow for the parallel execution of multiple
-floating\-/point operations.  In this paper a method for the
+appropriately in order to allow for the simultaneous execution of
+multiple floating\-/point operations.  In this paper a method for the
 calculation of the real dilogarithm $\Li$ is presented, which makes
-use of ILP, potentially resulting in a reduced run\-/time compared to
-many algorithms presented so far.
+use of ILP, resulting in a reduced run\-/time compared to many
+algorithms presented so far, when executed on appropriate CPUs.
 
 This paper is organized as follows: In \secref{sec:toymodel} different
 implementation strategies are discussed using a toy example function.
@@ -109,8 +109,8 @@ of this paper.
 \section{Implementation strategies}
 \label{sec:toymodel}
 
-As a toy example we consider the function $\ln(1+x)$, which has the
-Taylor expansion
+As a toy example we consider the real function $\ln(1+x)$ for $x>-1$,
+which has the Taylor expansion
 %
 \begin{align}
   \ln(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \frac{x^6}{6} + \frac{x^7}{7}
@@ -225,20 +225,20 @@ further ILP.  A C implementation of Eq.~\eqref{eq:mixed} could read:
 \lstinputlisting[language=C]{src/log1p_mixed.c}
 %
 Note, that the value $y=x^2$ can be re-used in the calculation of both
-the numerator and in the denominator.  A computation of $y^2$ is not
+the numerator and the denominator.  A computation of $y^2$ is not
 necessary.  This ``mixed'' implementation requires 8 floating\-/point
 multiplications, 1 floating\-/point division and 6 additions.  The
-rational function approximation in Eq.~\eqref{eq:mixed} may be faster
-for long numerator/denominator polynomials, where the cost of the
-floating\-/point division is smaller than the gain by the parallel
-execution of the terms in the numerator and denominator.
+rational function approximation in Eq.~\eqref{eq:mixed} may be
+beneficial for long numerator/denominator polynomials, where the cost
+of the floating\-/point division is smaller than the gain by the
+parallel execution of the terms in the numerator and denominator.
 
 
 \section{ILP-aware approximation of the real dilogarithm}
 \label{sec:algorithm}
 
 In the following an ILP-aware implementation of the real dilogarithm
-is presented, which allows for the parallel execution of different
+is presented, which allows for the simultaneous execution of multiple
 floating\-/point operations.  The real dilogarithm is defined as
 %
 \begin{align}
@@ -274,7 +274,7 @@ The r.h.s.\ of Eqs.~\eqref{eq:series}--\eqref{eq:cheby} can be summed,
 for example, using Horner's scheme or Clenshaw's algorithm
 \cite{clenshaw}, respectively.  These summation techniques are,
 however, purely sequential and thus do not make use of ILP.  In the
-following an approximation of the real dilogarithm is presented, which
+following an approximant of the real dilogarithm is presented, which
 makes use of ILP, using a rational function approximation in
 combination with Estrin's scheme, similar to the approach used in
 Eq.~\eqref{eq:mixed}.
@@ -350,8 +350,9 @@ the evaluation of $\Li(x)$ with double precision.
 Note that the approximant on the r.h.s.\ of Eq.~\eqref{eq:minimax} is
 very similar to the approximant presented in Ref.~\cite{morris} (DILOG
 0011), although with slightly different coefficients.  In order to
-allow for the use of ILP for the evaluation of the numerator and the
-denominator we use Estrin's scheme and write
+allow for the use of ILP in the evaluation of the numerator and the
+denominator on the r.h.s.\ of Eq.~\eqref{eq:minimax} we use Estrin's
+scheme and write
 %
 \begin{align}
   \Li(x) &\approx x\frac{P(x)}{Q(x)}, & &0\leq x \leq \frac{1}{2},
@@ -374,8 +375,8 @@ In \tabref{tab:runtime} the run\-/time of different C implementations
 for the real dilogarithm is compared to the implementation given in
 the appendix on two different CPU architectures.  On each architecture
 the implementations are compiled with \texttt{g++} with optimization
-\texttt{-O2}.  The shown run\-/time denotes the total wall clock time
-for the calculation of $\Li(x)$ for $10^6$ uniformly distributed
+level \texttt{-O2}.  The shown run\-/time denotes the total wall clock
+time for the calculation of $\Li(x)$ for $10^6$ uniformly distributed
 random values $x\in[0,1/2]$.  The choice of this interval ensures that
 the measurement is only sensitive to the formulation of the
 approximant, but not to the transformation onto the interval
@@ -427,8 +428,8 @@ Cephes uses a rational function approximation with more terms in the
 numerator and denominator.  Furthermore, Cephes evaluates the
 numerator and denominator polynomials using Horner's scheme, which is
 purely sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$
-  twice, which leads to a further increased run\-/time when a benchmark
-  interval with $x>1$ is chosen.}
+  twice, which leads to a further increased run\-/time when a
+  benchmark interval with $x>1$ would be chosen.}
 
 Algorithm 327 \cite{koelbigDilog}, Algorithm 490 \cite{ginsberg} and
 the implementation found in the GNU Scientific Library (GSL)
@@ -455,13 +456,12 @@ the use of instruction\-/level (ILP) parallelism.  We found that a
 rational minimax approximant in combination with Estrin's scheme to
 evaluate the numerator/denominator polynomials provides both a
 sufficient numerical precision and a high degree of ILP, potentially
-leading to a reduced run\-/time.  A corresponding approximant and a C
-implementation have been proposed and compared to several existing
-implementations w.r.t.\ their run\-/time.  The C implementation of the
-presented approximant can be found in the appendix.  C++ and FORTRAN
-implementations can be found in the Polylogarithm library
-\cite{polylogarithm}.  Implementations in Julia and Rust can be found
-in \cite{PolyLog.jl} and \cite{polylog}, respectively.
+leading to a reduced run\-/time when executed on an appropriate CPU.
+A corresponding approximant and a C implementation have been proposed
+and compared to several existing implementations w.r.t.\ their
+run\-/time.  The C implementation of the presented approximant can be
+found in the appendix.  C++, Fortran, Julia and Rust implementations
+can be found in \cite{polylogarithm,PolyLog.jl,polylog}, respectively.
 
 \appendix
 
