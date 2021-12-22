@@ -427,9 +427,10 @@ in this paper.  This longer run\-/time has several reasons: For one,
 Cephes uses a rational function approximation with more terms in the
 numerator and denominator.  Furthermore, Cephes evaluates the
 numerator and denominator polynomials using Horner's scheme, which is
-purely sequential.\footnote{For $x>1$ Cephes calculates $\ln(x)$
-  twice, which leads to a further increased run\-/time when a
-  benchmark interval with $x>1$ would be chosen.}
+purely sequential.%
+% \footnote{For $x>1$ Cephes calculates $\ln(x)$ twice, which leads to a
+%   further increased run\-/time when a benchmark interval with $x>1$
+%   would be chosen.}
 
 Algorithm 327 \cite{koelbigDilog}, Algorithm 490 \cite{ginsberg} and
 the implementation found in the GNU Scientific Library (GSL)
