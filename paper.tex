@@ -249,8 +249,9 @@ computation of the terms in the numerator and denominator.
 \label{sec:algorithm}
 
 In the following an ILP-aware implementation of the real dilogarithm
-is presented, which allows for the simultaneous execution of multiple
-floating\-/point operations.  The real dilogarithm is defined as
+with double precision is presented, which allows for the simultaneous
+execution of multiple floating\-/point operations.  The real
+dilogarithm is defined as
 %
 \begin{align}
   \Li(x) &= -\int_0^x \frac{\ln(1-t)}{t} \, \textnormal{d}t, &
@@ -468,7 +469,7 @@ the use of instruction\-/level (ILP) parallelism.  We found that a
 rational minimax approximant in combination with Estrin's scheme to
 evaluate the numerator/denominator polynomials provides both a
 sufficient numerical precision and a high degree of ILP, potentially
-leading to a reduced run\-/time when executed on an appropriate CPU.
+leading to a reduced run\-/time when executed on a appropriate CPUs.
 A corresponding approximant and a C implementation have been proposed
 and compared to several existing implementations w.r.t.\ their
 run\-/time.  The C implementation of the presented approximant can be
