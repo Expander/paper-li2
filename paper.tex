@@ -151,8 +151,8 @@ A C implementation using Horner's scheme could read
 Note, that the formulation using Horner's scheme requires the
 evaluation of the floating\-/point operations in strictly sequential
 order.  However, the significant reduction of the number of
-floating\-/point multiplications, compared to the naive
-implementation, usually results in a shorter run\-/time.
+floating\-/point multiplications, compared to the naive implementation
+from above, usually results in a shorter run\-/time.
 
 There are several different possibilities to reduce the run\-/time of
 Horner's method by rewriting the series expansion of $\ln(1+x)$ such
@@ -184,9 +184,10 @@ using Estrin's scheme \cite{estrin},
 %
 \begin{align}
 \begin{split}
-  \ln(1+x) \approx{}& x + \left(\frac{x}{3}-\frac{1}{2}\right)
-    y \\ &+\left[\left(\frac{x}{7}-\frac{1}{6}\right)
-    y+\frac{x}{5}-\frac{1}{4}\right] z,
+  \ln(1+x) \approx{}& x + y \left(\frac{x}{3}-\frac{1}{2}\right)
+    \\ &+ z \left[\frac{x}{5} - \frac{1}{4}
+      + y \left(\frac{x}{7}-\frac{1}{6}\right)
+    \right],
 \end{split}\label{eq:estrin}%
 \end{align}
 %
@@ -198,29 +199,34 @@ could read:
 %
 \lstinputlisting[language=C]{src/log1p_estrin.c}
 
-To exploit ILP further, one could use a rational function
+Another option to exploit ILP is to use a rational function
 approximation, such as a Padé approximant \cite{pade}, where the
 numerator and the denominator can be calculated in parallel.  A Padé
 approximant of $\ln(1+x)$ at the same order as Eq.~\eqref{eq:taylor}
-reads
+can be written as
 %
 \begin{align}
   \ln(1+x) &\approx x
-  \frac{\frac{320 x^3}{40143}+\frac{44320 x^2}{120429}+\frac{51064
-    x}{40143}+1}{\frac{5120 x^3}{40143}+\frac{12320 x^2}{13381}+\frac{23712
-    x}{13381}+1}
+  \frac{
+    1 + \frac{51064}{40143} x + \frac{44320}{120429} x^2 + \frac{320}{40143} x^3
+  }{
+    1 + \frac{23712}{13381} x + \frac{12320}{13381} x^2 + \frac{5120}{40143} x^3
+  }
   \label{eq:pade}
   \\
   &= x
-  \frac{\left(\frac{320 x}{40143}+\frac{44320}{120429}\right)y+\frac{51064
-    x}{40143}+1}{\left(\frac{5120 x}{40143}+\frac{12320}{13381}\right)y+\frac{23712
-    x}{13381}+1},
+  \frac{
+    1 + \frac{51064}{40143} x + y \left(\frac{44320}{120429} + \frac{320}{40143} x\right)
+  }{
+    1 + \frac{23712}{13381} x + y \left(\frac{12320}{13381} + \frac{5120}{40143} x\right)
+  },
   \label{eq:mixed}
 \end{align}
 %
 where $y=x^2$.  In Eq.~\eqref{eq:mixed} the numerator and the
 denominator have been re-written using Estrin's scheme, allowing for
-further ILP.  A C implementation of Eq.~\eqref{eq:mixed} could read:
+further ILP, compared to Eq.~\eqref{eq:pade}.  A C implementation of
+Eq.~\eqref{eq:mixed} could read:
 %
 \lstinputlisting[language=C]{src/log1p_mixed.c}
 %
