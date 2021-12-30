@@ -61,12 +61,12 @@ double li2(double x)
 
    const double y2 = y*y;
    const double y4 = y2*y2;
-   const double p = P[0] + y * P[1]
-      + y2 * (P[2] + y * P[3])
-      + y4 * (P[4] + y * P[5]);
-   const double q = Q[0] + y * Q[1]
-      + y2 * (Q[2] + y * Q[3])
-      + y4 * (Q[4] + y * Q[5] + y2 * Q[6]);
+   const double p = P[0] + y*P[1]
+      + y2*(P[2] + y*P[3])
+      + y4*(P[4] + y*P[5]);
+   const double q = Q[0] + y*Q[1]
+      + y2*(Q[2] + y*Q[3])
+      + y4*(Q[4] + y*Q[5] + y2*Q[6]);
 
    return r + s*y*p/q;
 }
