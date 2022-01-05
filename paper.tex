@@ -149,7 +149,7 @@ A C implementation using Horner's scheme could read
 %
 \lstinputlisting[language=C]{src/log1p_horner.c}
 %
-Note, that the formulation using Horner's scheme requires the
+Note that the formulation using Horner's scheme requires the
 evaluation of the floating\-/point operations in strictly sequential
 order.  However, the significant reduction of the number of
 floating\-/point multiplications, compared to the naive implementation
@@ -157,7 +157,7 @@ from above, usually results in a shorter run\-/time.
 
 There are several different possibilities to reduce the run\-/time of
 Horner's method by rewriting the series expansion of $\ln(1+x)$ such
-that more terms can be calculated in parallel, while the number
+that more terms can be calculated in parallel, while the number of
 floating\-/point operations is still kept small.  One possibility is
 to split the r.h.s.\ of Eq.~\eqref{eq:horner} into two distinct sums,
 one containing the even powers and the other containing the odd powers
@@ -173,7 +173,7 @@ of $x$,
 %
 where $y=x^2$.  This formulation requires 8 floating\-/point
 multiplications and 6 additions, i.e.\ one more multiplication than
-Horner's scheme.  However, in Eq.~\eqref{eq:split} both sums can then
+Horner's scheme.  However, in Eq.~\eqref{eq:split} both sums can
 be calculated in parallel, leading to a potential speed-up if the cost
 of the additional multiplication is smaller than the gain by the
 parallel execution.  A C implementation could read:
@@ -225,25 +225,27 @@ can be written as
 \end{align}
 %
 where $y=x^2$.  In Eq.~\eqref{eq:mixed} the numerator and the
-denominator have been re-written using Estrin's scheme, allowing for
-further ILP, compared to Eq.~\eqref{eq:pade}.  A C implementation of
-Eq.~\eqref{eq:mixed} could read:
+denominator have been re-written using Estrin's scheme to reduce the
+number of floating\-/point multiplications compared to
+Eq.~\eqref{eq:pade}, while still allowing for some degree of ILP at
+the same time.  A C implementation of Eq.~\eqref{eq:mixed} could read:
 %
 \lstinputlisting[language=C]{src/log1p_mixed.c}
 %
-Note, that the value $y=x^2$ can be re-used in the calculation of both
+Note that the value $y=x^2$ can be re-used in the calculation of both
 the numerator and the denominator.  A computation of $y^2$ is not
 necessary.  This ``mixed'' implementation requires 8 floating\-/point
-multiplications, 1 floating\-/point division and 6 additions.  A more
-optimized minimax rational function approximant, similar to
-Eq.~\eqref{eq:mixed}, but with a smaller error, may be preferable over
-a Taylor expansion when approximating a function over a larger
-interval.  At the same time such a rational function approximant
+multiplications, 1 floating\-/point division and 6 additions.  Note
+also that a rational function approximant such as Eq.~\eqref{eq:mixed}
 naturally allows for ILP, as the numerator and denominator can be
 computed in parallel.  This is in particular beneficial for long
 numerator/denominator polynomials, where the cost of the
 floating\-/point division is smaller than the gain by the parallel
-computation of the terms in the numerator and denominator.
+computation of the terms in the numerator and denominator.  In order
+to further reduce the error and/or the number of terms in the
+approximant, a more ``optimized'' minimax rational function
+approximant may be used instead of a Taylor expansion or Padé
+approximant when approximating a function over a larger interval.
 
 
 \section{ILP-aware approximant of the real dilogarithm}
@@ -275,7 +277,7 @@ series
 %
 where $B_k$ are the Bernoulli numbers.  A series representation in
 terms of Chebyshev polynomials of the first kind $T_n(x)$ is given in
-\cite{luke},
+Ref.~\cite{luke},
 %
 \begin{align}
   \Li(x) = \sum_{k=0}^\infty a_n T_n(2x-1),
@@ -425,7 +427,7 @@ among the ones shown in the table.  Both approaches use a rational
 function approximant with the same number of terms.  However, the
 approximant from Ref.~\cite{morris} has been implemented (for
 comparison) to use Horner's scheme to evaluate the numerator and the
-denominator.  Thus, the run\-/time difference of $\sim 30\%$ between
+denominator.  Thus, the run\-/time difference of around $30\%$ between
 the two stems only from the fact that the implementation presented in
 this paper uses Estrin's scheme to evaluate the numerator and the
 denominator and as such can make use of ILP, while in the
@@ -471,7 +473,7 @@ rational minimax approximant in combination with Estrin's scheme to
 evaluate the numerator/denominator polynomials provides both a
 sufficient numerical precision and a high degree of ILP, potentially
 leading to a reduced run\-/time when executed on a appropriate CPUs.
-A corresponding approximant and a C implementation have been proposed
+A corresponding approximant and a C implementation have been presented
 and compared to several existing implementations w.r.t.\ their
 run\-/time.  The C implementation of the presented approximant can be
 found in the appendix.  C++, Fortran, Julia and Rust implementations
